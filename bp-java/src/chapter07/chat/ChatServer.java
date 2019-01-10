@@ -27,6 +27,7 @@ public class ChatServer {
 			
 			// 3. Waiting request ( accept() )
 			List<Writer> listWriters = new ArrayList<Writer>();
+			
 			while (true) {
 				Socket socket = serverSocket.accept();
 				new ChatServerThread(socket, listWriters).start();

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
 
@@ -32,6 +33,12 @@ public class ChatServerThread extends Thread {
 	public void run() {		
 		try {
 			// 1. Remote host information
+			InetSocketAddress inetRemoteSocketAddress = 
+					(InetSocketAddress) socket.getRemoteSocketAddress();
+			
+			ChatServer.log("connected by client[" +
+							inetRemoteSocketAddress.getAddress().getHostAddress() + ":" +
+							inetRemoteSocketAddress.getPort() + "]");
 			
 			// 2. Get IOStream
 			br = new BufferedReader(
@@ -48,25 +55,26 @@ public class ChatServerThread extends Thread {
 					break;
 				}
 				
-				// 4. Analyzing protocol
+				// 4. Analyzing protocol (protocol:contents)
 				String[] tokens = request.split(":");
 				if ("join".equals(tokens[0])) {
 					doJoin(tokens[1], pw);
 				} else if ("message".equals(tokens[0])) {
-					doMessage(tokens[1]);
+					doMessage(tokens[1], tokens[2]);
 				} else if ("quit".equals(tokens[0])) {
-					// doQuit();
+					doQuit(pw);
 				} else {
 					ChatServer.log("error: unknown request(" + tokens[0] + ")");
 				}
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}	// end of run()
 	
-	private void doJoin(String nickName, Writer writer) {
-		this.nickname = nickName;
+	private void doJoin(String nickname, Writer writer) {
+		this.nickname = nickname;
 		
 		String data = nickname + "님이 들어왔습니다.";
 		broadcast(data);
@@ -80,7 +88,11 @@ public class ChatServerThread extends Thread {
 	}
 	
 	private void doMessage(String message) {
-		// TODO doMessage()
+		broadcast(message);
+	}
+
+	private void doMessage(String message, String nickname) {
+		broadcast(nickname + ": " + message);
 	}
 	
 	private void doQuit(Writer writer) {
@@ -107,6 +119,7 @@ public class ChatServerThread extends Thread {
 				printWriter.println(data);
 				printWriter.flush();
 			}
+			// ChatServer.log("broadcast completed");
 		}
 	}
 	

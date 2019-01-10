@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class ChatClient {
+	
+	private static final String SERVER_IP = "192.168.0.68";
+	private static final int SERVER_PORT = 9999;
 
 	public static void main(String[] args) {
 		Scanner sc = null;
@@ -16,10 +20,13 @@ public class ChatClient {
 		
 		try {
 			// 1. Connecting a keyboard
+			sc = new Scanner(System.in);
 			
 			// 2. Creating a socket for the client
+			socket = new Socket();
 			
 			// 3. Connection
+			socket.connect(new InetSocketAddress(SERVER_IP, SERVER_PORT));
 			
 			// 4. Creating reader/writer
 			BufferedReader br = new BufferedReader(
@@ -30,27 +37,39 @@ public class ChatClient {
 			// 5. Join protocol
 			System.out.print("Your nickname >> ");
 			String nickname = sc.nextLine();
-			// printWriter.println("join:" + nickname);
-			// printWriter.flush();
-			
+
+			pw.println("join:" + nickname);
+			pw.flush();
+
 			// 6. Starting ChatClientReceiveThread
+			Thread thread = new ChatClientReceiveThread(socket, br);
+			thread.start();
 			
 			// 7. Processing input from the keyboard
 			while (true) {
-				System.out.print(">> ");
-				String input = sc.nextLine();
+				String input = sc.nextLine() + ":" + nickname;
 				
 				if("quit".equals(input)) {
 					// 8. Processing quit protocol
 					break;
 				} else {
 					// 9. Processing message protocol
+					pw.println("message:" + input);
+					pw.flush();
 				}
 			}
 		} catch (IOException ex) {
 			// log("error: " + ex);
 		} finally {
 			// 10. Cleaning up resources
+			try {
+				if (socket != null &&
+					socket.isClosed() == false) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
