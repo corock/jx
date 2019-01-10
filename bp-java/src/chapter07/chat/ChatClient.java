@@ -47,19 +47,21 @@ public class ChatClient {
 			
 			// 7. Processing input from the keyboard
 			while (true) {
-				String input = sc.nextLine() + ":" + nickname;
+				String input = sc.nextLine();
 				
 				if("quit".equals(input)) {
 					// 8. Processing quit protocol
+					pw.println("quit");
+					pw.flush();
 					break;
 				} else {
 					// 9. Processing message protocol
-					pw.println("message:" + input);
+					pw.println("message:" + input + ":" + nickname);
 					pw.flush();
 				}
 			}
 		} catch (IOException ex) {
-			// log("error: " + ex);
+			ex.printStackTrace();
 		} finally {
 			// 10. Cleaning up resources
 			try {

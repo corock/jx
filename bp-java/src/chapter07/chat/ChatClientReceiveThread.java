@@ -2,9 +2,8 @@ package chapter07.chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ChatClientReceiveThread extends Thread {
 	
@@ -26,15 +25,30 @@ public class ChatClientReceiveThread extends Thread {
 			while (true) {
 				System.out.print(">> ");
 				String response = br.readLine();
+
+				if ("quit".equals(response)) {
+					break;
+				}
+
 				if ("join:ok".equals(response)) {
 					System.out.println("환영합니다.");
 				} else {
 					System.out.println(response);
 				}
 			}
-			
+
+		} catch (SocketException e) {
+			return;
 		} catch (IOException e) {
 			ChatServer.log("error: " + e);
+		} finally {
+			try {
+				if (socket != null && socket.isClosed() == false) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

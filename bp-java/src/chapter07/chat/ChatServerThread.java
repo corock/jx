@@ -33,8 +33,7 @@ public class ChatServerThread extends Thread {
 	public void run() {		
 		try {
 			// 1. Remote host information
-			InetSocketAddress inetRemoteSocketAddress = 
-					(InetSocketAddress) socket.getRemoteSocketAddress();
+			InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
 			
 			ChatServer.log("connected by client[" +
 							inetRemoteSocketAddress.getAddress().getHostAddress() + ":" +
@@ -63,6 +62,7 @@ public class ChatServerThread extends Thread {
 					doMessage(tokens[1], tokens[2]);
 				} else if ("quit".equals(tokens[0])) {
 					doQuit(pw);
+					break;
 				} else {
 					ChatServer.log("error: unknown request(" + tokens[0] + ")");
 				}
@@ -70,6 +70,14 @@ public class ChatServerThread extends Thread {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (socket != null && socket.isClosed() == false) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}	// end of run()
 	
@@ -109,7 +117,10 @@ public class ChatServerThread extends Thread {
 	}
 	
 	private void removeWriter(Writer writer) {
-		// TODO removeWriter()
+		synchronized (listWriters) {
+			int index = listWriters.indexOf(writer);
+			listWriters.remove(index);
+		}
 	}
 	
 	private void broadcast(String data) {
