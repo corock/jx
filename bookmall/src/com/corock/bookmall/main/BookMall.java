@@ -3,92 +3,157 @@ package com.corock.bookmall.main;
 import java.util.List;
 
 import com.corock.bookmall.dao.BookDAO;
+import com.corock.bookmall.dao.CartDAO;
 import com.corock.bookmall.dao.CategoryDAO;
 import com.corock.bookmall.dao.MemberDAO;
+import com.corock.bookmall.dao.OrderDAO;
 import com.corock.bookmall.vo.BookVO;
+import com.corock.bookmall.vo.CartVO;
 import com.corock.bookmall.vo.CategoryVO;
 import com.corock.bookmall.vo.MemberVO;
+import com.corock.bookmall.vo.OrderVO;
 
-public class BookMall<T> {
+public class BookMall {
 
 	public static void main(String[] args) {
 		/** 1. 회원 리스트 - 2명 */
-//		insert("이도훈", "010-9876-5432", "coco@gmail.com", "coco1234");
-//		insert("김원준", "010-2345-6789", "kim@naver.com", "kim1234");
-		System.out.println("\n===== 1. 회원 리스트(연번, 이름, 전화번호, 이메일, 비밀번호) =====");
-		getList("회원");
-		
-		
+		insertMember();
+		getMemberList();
+			
 		/** 2. 카테고리 리스트 - 3개 */
-//		insert("인문");
-//		insert("예술");
-//		insert("컴퓨터/IT");
-		System.out.println("\n===== 2. 카테고리 리스트(연번, 분류) =====");
-		getList("카테고리");
-		
-		
+		insertCategory();
+		getCategoryList();
+
 		/** 3. 상품 리스트 - 3개 */
-		System.out.println("\n===== 3. 상품 리스트(연번, 제목, 가격, 카테고리) =====");
-//		insert("Hamlet", 7100, 1);
-//		insert("In Paris", 26250, 2);
-//		insert("Effective Java", 36000, 3);
-		getList("상품");
-		
+		insertBook();
+		getBookList();
 		
 		/** 4. 카트 리스트 - 2개 */
+		insertCart();
+		getCartList();
+		
 		/** 5. 주문 리스트 - 1개 */
-		/** 6. 주문 도서 리스트 - 2개 */
-	}
-	
-	public static void getList(String keyword) {
-		if ("회원".equals(keyword)) {
-			List<MemberVO> list = new MemberDAO().getList();
+		insertOrder();
+		getOrderList();
 
-			for (MemberVO vo : list) {
-				System.out.println(vo);
-			}
+		/** 6. 주문 도서 리스트 - 2개 */
+		insertOrderBook();
+		getOrderBookList();
+	}
+
+	private static void getOrderBookList() {
+		System.out.println("주문 도서 리스트\n");
+
+		List<OrderVO> list = new OrderDAO().getOrderBookList();
+		for (OrderVO vo : list) {
+			System.out.println(vo.getOrderNo() + ", " + vo.getBookName() + ", " + vo.getCount());
+		}		
+	}
+
+	private static void insertOrderBook() {
+		/** constructor args: @orderNo, @bookNo, @count) */
+		OrderVO orderVo = new OrderVO(1, 1, 2);
+		new OrderDAO().insertOrderBook(orderVo);
+
+		orderVo = new OrderVO(1, 2, 3);
+		new OrderDAO().insertOrderBook(orderVo);
+	}
+
+	private static void getOrderList() {
+		System.out.println("주문 리스트\n");
+
+		List<OrderVO> list = new OrderDAO().getList();
+		for (OrderVO vo : list) {
+			System.out.println(vo);
 		}
 		
-		if ("카테고리".equals(keyword)) {
-			List<CategoryVO> list = new CategoryDAO().getList();
-			
-			for (CategoryVO vo : list) {
-				System.out.println(vo);
-			}
+		System.out.println("==================================================");		
+	}
+
+	private static void insertOrder() {
+		OrderVO orderVo = new OrderVO(1, 1, 62000, "부산 수영구 수영로");
+		new OrderDAO().insert(orderVo);
+	}
+
+	private static void getCartList() {
+		System.out.println("카트 리스트\n");
+
+		List<CartVO> list = new CartDAO().getList();
+		for (CartVO vo : list) {
+			System.out.println(vo);
 		}
-		
-		if ("상품".equals(keyword)) {
-			List<BookVO> list = new BookDAO().getList();
-			
-			for (BookVO vo : list) {
-				System.out.println(vo);
-			}
-		}
-		
-		return;
+
+		System.out.println("==================================================");
+	}
+
+	private static void insertCart() {
+		/** constructor args: @customerNo, @bookNo, @count */
+		CartVO cartVo = new CartVO(1, 1, 2);
+		new CartDAO().insert(cartVo);
+
+		cartVo = new CartVO(1, 2, 3);
+		new CartDAO().insert(cartVo);
 	}
 	
-	public static void insert(String title, int price, long categoryNo) {
-		BookVO vo = new BookVO();
-		vo.setTitle(title);
-		vo.setPrice(price);
-		vo.setCategoryNo(categoryNo);
-		new BookDAO().insert(vo);
+	private static void getBookList() {
+		System.out.println("상품 리스트\n");
+		
+		List<BookVO> list = new BookDAO().getList();
+		for (BookVO vo : list) {
+			System.out.println(vo);
+		}
+		
+		System.out.println("==================================================");
 	}
 	
-	public static void insert(String subject) {
-		CategoryVO vo = new CategoryVO();
-		vo.setSubject(subject);		
+	private static void insertBook() {
+		BookVO bookVo = new BookVO("Effective Java", 36000, 3);
+		new BookDAO().insert(bookVo);
+
+		bookVo = new BookVO("In Paris", 26000, 2);
+		new BookDAO().insert(bookVo);
+
+		bookVo = new BookVO("1984", 7100, 1);
+		new BookDAO().insert(bookVo);
+	}
+	
+	private static void getCategoryList() {
+		System.out.println("카테고리 리스트\n");
+		List<CategoryVO> list = new CategoryDAO().getList();
+		
+		for (CategoryVO vo : list) {
+			System.out.println(vo);
+		}
+		System.out.println("==================================================");
+	}
+
+	private static void insertCategory() {
+		CategoryVO vo = new CategoryVO("소설");
+		new CategoryDAO().insert(vo);
+
+		vo = new CategoryVO("예술");
+		new CategoryDAO().insert(vo);
+		
+		vo = new CategoryVO("컴퓨터/IT");
 		new CategoryDAO().insert(vo);
 	}
 	
-	public static void insert(String name, String tel, String email, String passwd) {
-		MemberVO vo = new MemberVO();
-		vo.setName(name);
-		vo.setTel(tel);
-		vo.setEmail(email);
-		vo.setPasswd(passwd);				
-		new MemberDAO().insert(vo);
+	private static void getMemberList() {
+		System.out.println("회원정보\n");
+		List<MemberVO> list = new MemberDAO().getList();
+
+		for (MemberVO vo : list) {
+			System.out.println(vo);
+		}
+		System.out.println("==================================================");
+	}
+	
+	private static void insertMember() {
+		MemberVO memberVo = new MemberVO("이도훈", "010-9876-5432", "coco@gmail.com", "******");
+		new MemberDAO().insert(memberVo);
+
+		memberVo = new MemberVO("김원준", "010-2345-6789", "kim@naver.com", "********");
+		new MemberDAO().insert(memberVo);
 	}
 
 }

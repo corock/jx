@@ -27,7 +27,7 @@ public class BookDAOTest {
 		BookVO bookVo = new BookVO("Effective Java", 36000, 3);
 		new BookDAO().insert(bookVo);
 
-		bookVo = new BookVO("In Paris", 26250, 2);
+		bookVo = new BookVO("In Paris", 26000, 2);
 		new BookDAO().insert(bookVo);
 
 		bookVo = new BookVO("1984", 7100, 1);

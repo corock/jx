@@ -5,6 +5,13 @@ public class CategoryVO {
 	private long no;
 	private String subject;
 
+	public CategoryVO() {
+	}
+
+	public CategoryVO(String subject) {
+		this.subject = subject;
+	}
+
 	public long getNo() {
 		return no;
 	}
@@ -23,7 +30,7 @@ public class CategoryVO {
 
 	@Override
 	public String toString() {
-		return no + " | " + subject;
+		return no + " " + subject;
 	}
 
 }

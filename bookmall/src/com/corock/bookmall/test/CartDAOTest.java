@@ -8,7 +8,7 @@ import com.corock.bookmall.vo.CartVO;
 public class CartDAOTest {
 
 	public static void main(String[] args) {
-		insertTest();
+//		insertTest();
 		getListTest();
 	}
 
@@ -25,11 +25,7 @@ public class CartDAOTest {
 
 
 	private static void insertTest() {
-		/**
-		 * @customerNo
-		 * @bookNo
-		 * @count
-		 */
+		/** constructor args: @customerNo, @bookNo, @count */
 		CartVO cartVo = new CartVO(1, 1, 2);
 		new CartDAO().insert(cartVo);
 

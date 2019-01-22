@@ -37,7 +37,7 @@ public class MemberDAO {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Error: " + e);
+			System.out.println("MemberDAO Error: " + e);
 		} finally {
 			try {
 				if (rs != null)    { rs.close(); }
@@ -58,7 +58,7 @@ public class MemberDAO {
 		
 		try {
 			conn = DB.getConnection();
-			String sql = "INSERT INTO Member VALUES (NULL, ?, ?, ?, ?, NULL)";
+			String sql = "INSERT INTO Member VALUES (NULL, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, vo.getName());
@@ -70,7 +70,7 @@ public class MemberDAO {
 			result = (count == 1);
 			
 		} catch (SQLException e) {
-			System.out.println("Error: " + e);
+			System.out.println("MemberDAO Error: " + e);
 		} finally {
 			try {
 				if (conn != null) { conn.close(); }

@@ -9,6 +9,16 @@ public class MemberVO {
 	private String passwd;
 	private long orderNo;
 
+	public MemberVO() {
+	}
+
+	public MemberVO(String name, String tel, String email, String passwd) {
+		this.name = name;
+		this.tel = tel;
+		this.email = email;
+		this.passwd = passwd;
+	}
+
 	public long getNo() {
 		return no;
 	}
@@ -59,7 +69,7 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return no + " | " + name + " | " + tel + " | " + email + " | " + passwd;
+		return no + ", " + name + ", " + tel + ", " + email + ", " + passwd;
 	}
 
 }

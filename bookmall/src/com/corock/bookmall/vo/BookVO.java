@@ -8,6 +8,15 @@ public class BookVO {
 	private long categoryNo;
 	private String categoryName;
 
+	public BookVO() {
+	}
+
+	public BookVO(String title, int price, long categoryNo) {
+		this.title = title;
+		this.price = price;
+		this.categoryNo = categoryNo;
+	}
+
 	public long getNo() {
 		return no;
 	}
@@ -50,7 +59,7 @@ public class BookVO {
 
 	@Override
 	public String toString() {
-		return no + " | " + title + " | " + price + " | " + categoryName;
+		return no + ", " + title + ", " + price + ", " + categoryName;
 	}
 
 }

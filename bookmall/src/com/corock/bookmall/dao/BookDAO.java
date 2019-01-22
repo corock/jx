@@ -28,10 +28,12 @@ public class BookDAO {
 			
 			while (rs.next()) {
 				BookVO vo = new BookVO();
+				
 				vo.setNo(rs.getLong(1));
 				vo.setTitle(rs.getString(2));
 				vo.setPrice(rs.getInt(3));
 				vo.setCategoryName(rs.getString(4));
+				
 				list.add(vo);
 			}
 			
