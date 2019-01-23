@@ -24,13 +24,13 @@ public class BookDAOTest {
 	}
 
 	private static void insertTest() {
-		BookVO bookVo = new BookVO("Effective Java", 36000, 3);
+		BookVO bookVo = new BookVO("Effective Java", 36000, 1);
 		new BookDAO().insert(bookVo);
 
 		bookVo = new BookVO("In Paris", 26000, 2);
 		new BookDAO().insert(bookVo);
 
-		bookVo = new BookVO("1984", 7100, 1);
+		bookVo = new BookVO("1984", 7100, 3);
 		new BookDAO().insert(bookVo);
 	}
 	
