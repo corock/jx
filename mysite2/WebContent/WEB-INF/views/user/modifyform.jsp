@@ -15,23 +15,29 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-				<form id="login-form" name="loginform" method="post" action="${pageContext.servletContext.contextPath}/user">
-					<input type="hidden" name="a" value="login">
+
+				<form id="join-form" name="joinForm" method="post" action="${pageContext.servletContext.contextPath}/user" />
+					<input type="hidden" name="a" value="modify">
+					<label class="block-label" for="name">이름</label>
+					<input id="name" name="name" type="text" value="">
+
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="">
-					<label class="block-label" >패스워드</label>
+					<h3>set-vo-here@gmail.com</h3>
+					
+					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
-					<%
-						String result = (String) request.getAttribute("result");
-						if ("fail".equals(result)) {
-					%>
-						<p>
-							로그인이 실패 했습니다.
-						</p>
-					<%
-						}
-					%>
-					<input type="submit" value="로그인">
+					
+					<fieldset>
+						<legend>성별</legend>
+						<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
+						<label>남</label> <input type="radio" name="gender" value="male">
+						
+						<label>여</label> <input type="radio" name="gender" value="female">
+						<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
+					</fieldset>
+					
+					<input type="submit" value="수정하기">
+					
 				</form>
 			</div>
 		</div>
