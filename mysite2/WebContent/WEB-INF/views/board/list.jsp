@@ -56,12 +56,29 @@
 						<td><a href="" class="del">삭제</a></td>
 					</tr>
 				</table>
+				
+				<!-- pager 추가 -->
+				<div class="pager">
+					<ul>
+						<li><a href="">◀</a></li>
+						<li><a href="">1</a></li>
+						<li class="selected">2</li>
+						<li><a href="">3</a></li>
+						<li>4</li>
+						<li>5</li>
+						<li><a href="">▶</a></li>
+					</ul>
+				</div>					
+				<!-- pager 추가 -->
+				
 				<div class="bottom">
 					<a href="" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp">
+			<c:param name="menu" value="board" />
+		</c:import>
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
