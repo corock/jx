@@ -7,9 +7,6 @@
 <div id="header">
 	<h1><a href="${pageContext.servletContext.contextPath}">MySite</a></h1>
 	<ul>
-		<%
-			UserVO authUser = (UserVO) session.getAttribute("authUser");
-		%>
 		<c:choose>
 			<c:when test="${empty authUser}">
 				<li><a href="${pageContext.servletContext.contextPath}/user?a=loginform">로그인</a><li>
