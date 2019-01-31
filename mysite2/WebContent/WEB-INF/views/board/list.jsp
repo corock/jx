@@ -9,6 +9,29 @@
 <title>MySite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.servletContext.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css">
+<script>
+	var liSelected = null;
+	
+	var onClicked = function() {
+		if (liSelected != null) {
+			// unselect
+			liSelected.className = "";
+		}
+		// select
+		this.className = "selected";
+		liSelected = this;
+	}
+	
+	onClicked();
+	
+	window.onload = function() {
+		document.getElementById("page1").onclick = onClicked;
+		document.getElementById("page2").onclick = onClicked;
+		document.getElementById("page3").onclick = onClicked;
+		document.getElementById("page4").onclick = onClicked;
+		document.getElementById("page5").onclick = onClicked;
+	}
+</script>
 </head>
 <body>
 	<div id="container">
@@ -65,13 +88,27 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test="${end > 5}">
+							<li><a href="${pageContext.servletContext.contextPath}/board?page=${begin - 1}">◀</a></li>
+						</c:if>
+					
+						<c:forEach begin="${begin}" end="${end}" step="1" varStatus="status">
+							<c:choose>
+								<c:when test="${status.current < last}">							
+									<li><a href="${pageContext.servletContext.contextPath}/board?page=${status.current}">${status.current}</a></li>
+								</c:when>
+								<c:when test="${status.current == current}">
+									<li class="selected"><a href="${pageContext.servletContext.contextPath}/board?page=${status.current}">${status.current}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li>${status.current}</li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					
+						<c:if test="${end < last}">
+							<li><a href="${pageContext.servletContext.contextPath}/board?page=${end + 1}">▶</a></li>
+						</c:if>						
 					</ul>
 				</div>					
 				<!-- pager 추가 -->

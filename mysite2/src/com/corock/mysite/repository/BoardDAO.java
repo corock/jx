@@ -216,7 +216,7 @@ public class BoardDAO {
 		return vo;
 	}
 	
-	public List<BoardVO> getList(String keyword) {
+	public List<BoardVO> getList(String keyword, int pageCount) {
 		List<BoardVO> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -228,10 +228,12 @@ public class BoardDAO {
 						 "     FROM Board b, User c " +
 						 "    WHERE b.user_no = c.no" + 
 						 "      AND (b.title LIKE ? OR b.contents LIKE ?)" +
-						 " ORDER BY b.group_no DESC, b.order_no ASC";
+						 " ORDER BY b.group_no DESC, b.order_no ASC" +
+						 "    LIMIT ?, 10";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%" + keyword + "%");
 			pstmt.setString(2, "%" + keyword + "%");
+			pstmt.setInt(3, (pageCount - 1) * 10);
 
 			rs = pstmt.executeQuery();
 			 
@@ -277,6 +279,42 @@ public class BoardDAO {
 		}
 		
 		return conn;
+	}
+
+	public int getTotalCount(String keyword) {
+		List<BoardVO> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalCount = 0;
+		
+		try {
+			conn = getConnection();
+			String sql = "   SELECT COUNT(*) FROM Board" +
+						 "    WHERE title LIKE ? OR contents LIKE ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setString(2, "%" + keyword + "%");
+
+			rs = pstmt.executeQuery();
+			 
+			if (rs.next()) {
+				totalCount = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("getList() Error: " + e);
+		} finally {
+			try {
+				if (rs != null)    { rs.close(); }
+				if (pstmt != null) { pstmt.close(); }
+				if (conn != null)  { conn.close(); }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return totalCount;
 	}
 	
 }
