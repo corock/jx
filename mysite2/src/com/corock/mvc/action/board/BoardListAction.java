@@ -16,7 +16,11 @@ public class BoardListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<BoardVO> list = new BoardDAO().getList("");
+		String kwd = request.getParameter("kwd");
+		if (kwd == null) {
+			kwd = "";
+		}		
+		List<BoardVO> list = new BoardDAO().getList(kwd);
 		
 		request.setAttribute("list", list);
 		
