@@ -14,6 +14,42 @@ import com.corock.mysite.vo.UserVO;
 
 public class BoardDAO {
 	
+	public boolean reply(BoardVO vo) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = getConnection();
+			String sql = "INSERT INTO Board VALUES (NULL, ?, ?, now(), ?, " +
+						 "?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setInt(3, vo.getHit());
+			pstmt.setInt(4, vo.getGroupNo());
+			pstmt.setInt(5, vo.getOrderNo());
+			pstmt.setInt(6, vo.getDepth());
+			pstmt.setLong(7, vo.getUserNo());
+			
+			int count = pstmt.executeUpdate();
+			result = (count == 1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) { pstmt.close(); }
+				if (conn != null)  { conn.close(); }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
 	public boolean delete(BoardVO vo) {
 		boolean result = false;
 		Connection conn = null;
@@ -146,7 +182,7 @@ public class BoardDAO {
 		
 		try {
 			conn = getConnection();
-			String sql = "SELECT b.title, b.contents, b.user_no, b.no" +
+			String sql = "SELECT b.title, b.contents, b.user_no, b.no, b.group_no, b.order_no, b.depth" +
 						 "  FROM Board b, User c" +
 						 " WHERE b.user_no = c.no" +
 						 "   AND b.no = ?";
@@ -160,6 +196,9 @@ public class BoardDAO {
 				vo.setContents(rs.getString(2));
 				vo.setUserNo(rs.getLong(3));
 				vo.setNo(rs.getLong(4));
+				vo.setGroupNo(rs.getInt(5));
+				vo.setOrderNo(rs.getInt(6));
+				vo.setDepth(rs.getInt(7));
 			}
 			
 		} catch (SQLException e) {
@@ -185,7 +224,7 @@ public class BoardDAO {
 		
 		try {
 			conn = getConnection();
-			String sql = "   SELECT b.no, b.title, c.name, b.hit, date_format(b.write_date, '%Y-%m-%d %H:%m:%s'), c.no" + 
+			String sql = "   SELECT b.no, b.title, c.name, b.hit, date_format(b.write_date, '%Y-%m-%d %H:%m:%s'), c.no, b.depth" + 
 						 "     FROM Board b, User c " +
 						 "    WHERE b.user_no = c.no" + 
 						 "      AND (b.title LIKE ? OR b.contents LIKE ?)" +
@@ -205,6 +244,7 @@ public class BoardDAO {
 				vo.setHit(rs.getInt(4));
 				vo.setWriteDate(rs.getString(5).replace("\r\n", "<br />"));
 				vo.setUserNo(rs.getLong(6));
+				vo.setDepth(rs.getInt(7));
 				
 				list.add(vo);
 			}

@@ -33,15 +33,27 @@
 					<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
 							<td>${count - status.index}</td>
-							<td>
-								<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">
-									${vo.title}
-								</a>
-							</td>
+							<c:choose>
+								<c:when test="${vo.depth > 0}">
+									<td style="text-align: left; padding-left: ${vo.depth * 20}px;">
+										<img src="${pageContext.servletContext.contextPath}/assets/images/reply.png">
+										<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">
+											${vo.title}
+										</a>
+									</td>
+								</c:when>
+								<c:otherwise>
+									<td style="text-align: left;">
+										<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">
+											${vo.title}
+										</a>
+									</td>								
+								</c:otherwise>
+							</c:choose>
 							<td>${vo.userName}</td>							
 							<td>${vo.hit}</td>
 							<td>${vo.writeDate}</td>
-							<td> 
+							<td>
 								<c:if test="${sessionScope.authUser.no == vo.userNo}">
 									<a href="${pageContext.servletContext.contextPath}/board?a=delete&no=${vo.no}" class="del">삭제</a>
 								</c:if>

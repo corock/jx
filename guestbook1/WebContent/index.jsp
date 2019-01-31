@@ -1,5 +1,14 @@
+<%@page import="java.util.List"%>
+<%@page import="com.corock.guestbook.dao.GuestbookDAO"%>
+<%@page import="com.corock.guestbook.vo.GuestbookVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	GuestbookDAO dao = new GuestbookDAO();
+	List<GuestbookVO> list = dao.getList();
+	int count = list.size();
+%>
 
 <html>
 <head>
@@ -22,18 +31,18 @@
 	</table>
 	</form>
 	<br>
-	
-	<table width=510 border=1>
-		<tr>
-			<td>[1]</td>
-			<td>안대혁</td>
-			<td>2013-01-15</td> <!-- formatting 해주고 -->
-			<td><a href="deleteform.jsp">삭제</a></td>
-		</tr>
-		<tr>
-			<td colspan=4>안녕하세요</td>
-		</tr>
-	</table>
-	
+	<% for (GuestbookVO vo : list) { %>
+		<table width=510 border=1>
+			<tr>
+				<td><%= count-- %></td>
+				<td><%= vo.getName() %></td>
+				<td><%= vo.getRegDate() %></td>
+				<td><a href="deleteform.jsp?no=<%= vo.getNo() %>">삭제</a></td>
+			</tr>
+			<tr>
+				<td colspan=4><%= vo.getMessage() %></td>
+			</tr>
+		</table>
+	<% } %>
 </body>
 </html>

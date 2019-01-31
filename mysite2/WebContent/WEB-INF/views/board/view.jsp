@@ -32,12 +32,26 @@
 						</td>						
 					</tr>
 				</table>
-				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath}/board">글목록</a>
-				<c:if test="${authUser.no == vo.userNo}">
-					<a href="${pageContext.servletContext.contextPath}/board?a=modifyform&no=${vo.no}">글수정</a>
-				</c:if>
-				</div>
+				<c:choose>
+					<c:when test="${authUser.no == vo.userNo}">
+						<div class="bottom">
+							<a href="${pageContext.servletContext.contextPath}/board">글 목록</a>
+							<a href="${pageContext.servletContext.contextPath}/board?a=replyform&no=${vo.no}">답글</a>
+							<a href="${pageContext.servletContext.contextPath}/board?a=modifyform&no=${vo.no}">글 수정</a>
+						</div>
+					</c:when>
+					<c:when test="${!empty authUser}">
+						<div class="bottom">
+							<a href="${pageContext.servletContext.contextPath}/board">글목록</a>
+							<a href="${pageContext.servletContext.contextPath}/board?a=replyform&no=${vo.no}">답글</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="bottom">
+							<a href="${pageContext.servletContext.contextPath}/board">글목록</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
