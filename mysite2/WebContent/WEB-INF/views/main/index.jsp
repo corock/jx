@@ -17,11 +17,11 @@
 			<div id="content">
 				<div id="site-introduction">
 					<img id="profile" src="${pageContext.servletContext.contextPath}/assets/images/profile.jpg" style="width: 120px">
-					<h2>안녕하세요. CoRock의  MySite에 오신 것을 환영합니다.</h2>
+					<h2>안녕하세요. CoRock의  MySite입니다.</h2>
 					<p>
-						이 사이트는  웹 프로그램밍 실습과제 예제 사이트입니다.<br>
-						메뉴는  사이트 소개, 방명록, 게시판이 있구요. Python 수업 + 데이터베이스 수업 + 웹프로그래밍 수업 배운 거 있는거 없는 거 다 합쳐서
-						만들어 놓은 사이트 입니다.<br><br>
+						이 사이트는  웹 프로그래밍 실습과제 사이트입니다.<br>
+						메뉴는 사이트 소개, 방명록, 게시판이 있습니다.<br>
+						CoRock는 Coding Rockstar의 줄임말이며, <a href="https://corock.tistory.com" target="_blank">개인 블로그</a>를 운영중입니다.<br><br>
 						<a href="${pageContext.servletContext.contextPath}/guestbook">방명록</a>에 글 남기기<br>
 					</p>
 				</div>
