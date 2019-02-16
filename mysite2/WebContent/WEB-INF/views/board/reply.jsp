@@ -16,10 +16,14 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath}/board">
-					<input type = "hidden" name = "a" value="write">
+					<input type="hidden" name="a" value="reply">					
+					<input type="hidden" name="no" value="${requestScope.vo.no}">
+					<input type="hidden" name="group_no" value="${requestScope.vo.groupNo}">
+					<input type="hidden" name="order_no" value="${requestScope.vo.orderNo}">
+					<input type="hidden" name="depth" value="${requestScope.vo.depth}">
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2">글쓰기</th>
+							<th colspan="2">답글 달기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
@@ -33,10 +37,10 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath}/board">취소</a>
-						<input type="submit" value="등록">
+						<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">취소</a>
+						<input type="submit" value="답글 달기">
 					</div>
-				</form>				
+				</form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">

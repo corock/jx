@@ -1,6 +1,7 @@
-package com.corock.mysite.controller;
+package com.corock.mysite.controller.api;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,22 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.corock.mvc.action.AbstractActionFactory;
-import com.corock.mvc.action.Action;
-import com.corock.mvc.action.guestbook.GuestbookActionFactory;
-
-@WebServlet("/guestbook")
-public class GuestbookServlet extends HttpServlet {
+@WebServlet("/ajax")
+public class AjaxServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");		
-		String actionName = request.getParameter("a");
+		response.setContentType("application/json; charset=utf-8");
 		
-		AbstractActionFactory af = new GuestbookActionFactory();
-		Action action = af.getAction(actionName);
-		action.execute(request, response);
+		PrintWriter pw = response.getWriter();
+		String jsonString = "{\"name\": \"둘리\", \"age\": 10}";
+		pw.println(jsonString);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

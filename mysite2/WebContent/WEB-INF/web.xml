@@ -9,4 +9,38 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
+  </context-param>
+  
+  <!-- 리스너 정의 -->
+  <listener>
+    <listener-class>com.corock.mysite.listener.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!-- 필터-요청URL 매핑 -->
+  <filter>
+  	<filter-name>EncodingFilter</filter-name>
+  	<filter-class>com.corock.mvc.filter.EncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <!-- 서블릿-요청URL 매핑 -->
+  <servlet>
+    <servlet-name>MainServlet</servlet-name>
+    <servlet-class>com.corock.mysite.controller.MainServlet</servlet-class>
+    <init-param>
+      <param-name>config</param-name>
+      <param-value>/WEB-INF/config.xml</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>MainServlet</servlet-name>
+    <url-pattern></url-pattern>
+  </servlet-mapping>
 </web-app>
