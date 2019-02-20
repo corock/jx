@@ -15,34 +15,17 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-				<form id="join-form" name="modifyForm" method="post" action="${pageContext.servletContext.contextPath}/user">
-					<input type="hidden" name="a" value="modify">
-					<input type="hidden" name="no" value="${vo.no}">
-					<label class="block-label" for="name">이름</label>
-					<input id="name" name="name" type="text" value="">
-
+				<form id="login-form" name="loginform" method="post" action="${pageContext.servletContext.contextPath}/user/login">
 					<label class="block-label" for="email">이메일</label>
-					<h3>${vo.email}</h3>
-					
+					<input id="email" name="email" type="text" value="">
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
-					
-					<fieldset>
-						<legend>성별</legend>
-						<c:choose>
-							<c:when test="${vo.gender eq 'female'}">							
-								<label>남</label> <input type="radio" name="gender" value="male">
-								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-							</c:when>
-							<c:otherwise>
-								<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
-								<label>여</label> <input type="radio" name="gender" value="female">
-							</c:otherwise>
-						</c:choose>
-					</fieldset>
-					
-					<input type="submit" value="수정하기">
-					
+					<c:if test='${result == "fail"}'>
+						<p>
+							로그인이 실패 했습니다.
+						</p>
+					</c:if>
+					<input type="submit" value="로그인">
 				</form>
 			</div>
 		</div>

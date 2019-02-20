@@ -6,9 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Repository;
+
 import com.corock.mysite.exception.UserDAOException;
 import com.corock.mysite.vo.UserVO;
 
+@Repository
 public class UserDAO {
 	
 	public boolean update(UserVO vo) {
