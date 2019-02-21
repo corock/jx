@@ -23,6 +23,7 @@
 	</appender>
 
 	<logger name="com.corock.mysite.exception" level="info" additivity="false">
+		<appender-ref ref="consoleAppender" />
 		<appender-ref ref="fileAppenderException" />
 	</logger>
 
