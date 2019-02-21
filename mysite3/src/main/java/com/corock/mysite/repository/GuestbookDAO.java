@@ -1,13 +1,15 @@
 package com.corock.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.corock.mysite.vo.GuestbookVO;
@@ -15,13 +17,16 @@ import com.corock.mysite.vo.GuestbookVO;
 @Repository
 public class GuestbookDAO {
 	
+	@Autowired
+	private DataSource dataSource;
+	
 	public boolean delete(GuestbookVO vo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "DELETE FROM Guestbook" +
 						 "      WHERE no = ?" +
 						 "        AND password = PASSWORD(?)";
@@ -53,7 +58,7 @@ public class GuestbookDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "INSERT INTO Guestbook" +
 						 "     VALUES (NULL, ?, PASSWORD(?), ?, now())";
 			pstmt = conn.prepareStatement(sql);
@@ -86,7 +91,7 @@ public class GuestbookDAO {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "   SELECT no, name, password, message, date_format(reg_date, '%b %d, %Y')" + 
 						 "     FROM Guestbook" + 
 						 " ORDER BY no DESC";
@@ -119,21 +124,6 @@ public class GuestbookDAO {
 		}
 		
 		return list;
-	}
-	
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			String url = "jdbc:mysql://localhost:3306/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Failed to load driver: " + e);
-		}
-		
-		return conn;
 	}
 	
 }

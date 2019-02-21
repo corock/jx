@@ -1,11 +1,13 @@
 package com.corock.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.corock.mysite.exception.UserDAOException;
@@ -14,13 +16,16 @@ import com.corock.mysite.vo.UserVO;
 @Repository
 public class UserDAO {
 	
+	@Autowired
+	private DataSource dataSource;
+	
 	public boolean update(UserVO vo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "UPDATE User" +
 						 "   SET name = ?, password = PASSWORD(?), gender = ?" +
 						 " WHERE no = ?";
@@ -55,7 +60,7 @@ public class UserDAO {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			String sql = "SELECT no, name, email, password, gender" +
 						 "  FROM User" +
@@ -94,7 +99,7 @@ public class UserDAO {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			String sql = "SELECT no, name" +
 						 "  FROM User" +
@@ -136,7 +141,7 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "INSERT INTO User" +
 						 "     VALUES (NULL, ?, ?, PASSWORD(?), ?, now())";
 			pstmt = conn.prepareStatement( sql );
@@ -160,23 +165,6 @@ public class UserDAO {
 		}
 		
 		return count;
-	}
-	
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-
-		try {
-			// 1. Load jdbc driver
-			Class.forName("com.mysql.jdbc.Driver");
-
-			// 2. Connect to MySQL
-			String url = "jdbc:mysql://localhost:3306/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Failed to load driver: " + e);
-		}
-		
-		return conn;
 	}
 	
 }

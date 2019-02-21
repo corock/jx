@@ -1,18 +1,24 @@
 package com.corock.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.corock.mysite.vo.BoardVO;
-import com.corock.mysite.vo.GuestbookVO;
-import com.corock.mysite.vo.UserVO;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.corock.mysite.vo.BoardVO;
+
+@Repository
 public class BoardDAO {
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	public boolean reply(BoardVO vo) {
 		boolean result = false;
@@ -20,7 +26,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "INSERT INTO Board VALUES (NULL, ?, ?, now(), ?, " +
 						 "?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
@@ -56,7 +62,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "DELETE FROM Board WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -85,7 +91,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "UPDATE Board" +
 						 "   SET title = ?, contents = ?" +
 						 " WHERE no = ?";
@@ -118,7 +124,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "UPDATE Board SET hit = hit + 1 WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -147,7 +153,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "INSERT INTO Board VALUES (NULL, ?, ?, now(), ?, " +
 						 "(SELECT IFNULL(MAX(group_no), 0) + 1 FROM Board a), 1, 0, ?)";
 			pstmt = conn.prepareStatement(sql);
@@ -181,7 +187,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "SELECT b.title, b.contents, b.user_no, b.no, b.group_no, b.order_no, b.depth" +
 						 "  FROM Board b, User c" +
 						 " WHERE b.user_no = c.no" +
@@ -223,7 +229,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "   SELECT b.no, b.title, c.name, b.hit, date_format(b.write_date, '%Y-%m-%d %H:%m:%s'), c.no, b.depth" + 
 						 "     FROM Board b, User c " +
 						 "    WHERE b.user_no = c.no" + 
@@ -265,21 +271,6 @@ public class BoardDAO {
 		
 		return list;
 	}
-	
-	private Connection getConnection() throws SQLException {
-		Connection conn = null;
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			String url = "jdbc:mysql://localhost:3306/webdb";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Failed to load driver: " + e);
-		}
-		
-		return conn;
-	}
 
 	public int getTotalCount(String keyword) {
 		List<BoardVO> list = new ArrayList<>();
@@ -289,7 +280,7 @@ public class BoardDAO {
 		int totalCount = 0;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "   SELECT COUNT(*) FROM Board" +
 						 "    WHERE title LIKE ? OR contents LIKE ?";
 			pstmt = conn.prepareStatement(sql);
