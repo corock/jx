@@ -1,7 +1,5 @@
 package com.corock.mysite.vo;
 
-import java.util.Date;
-
 public class GuestbookVO {
 
 	private long no;
