@@ -16,7 +16,8 @@
 	<!-- register context listener -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
+		<param-value>classpath:applicationContext.xml</param-value>
+		<!-- <param-value>/WEB-INF/applicationContext.xml</param-value> -->
 	</context-param>
 
 	<listener>
@@ -49,6 +50,7 @@
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
