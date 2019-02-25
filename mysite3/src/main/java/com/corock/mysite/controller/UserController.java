@@ -45,9 +45,12 @@ public class UserController {
 		UserVO authUser = userService.getUser( vo );
 		
 		if ( authUser == null ) {
-			/* fail to auth */
-			session.setAttribute( "result", "fail" );
-			return "/user/login";
+			/**
+			 * fail to auth
+			 * session.setAttribute( "result", "fail" );
+			 * return "/user/login";
+			 */
+			return "redirect:/user/login?result=fail";
 		}
 		
 		/* auth success -> auth processing */
@@ -63,7 +66,8 @@ public class UserController {
 
 	@RequestMapping( value = "/modify", method = RequestMethod.GET )
 	public String modify( HttpSession session, Model model ) {
-		long no = ( (UserVO) session.getAttribute("authUser") ).getNo();
+		/* access control */
+		long no = ((UserVO) session.getAttribute("authUser")).getNo();
 		UserVO vo = userService.getUser( no );
 		
 		if ( vo != null ) {
@@ -78,16 +82,16 @@ public class UserController {
 		/* access control(security) */
 		UserVO authUser = null;
 		
-		if (session != null) {
+		if ( session != null ) {
 			authUser = (UserVO) session.getAttribute("authUser");
 		}
-		if (session == null) {
+		if ( session == null ) {
 			return "/user";
 		}
 		
-		userVo.setNo(authUser.getNo());		
+		userVo.setNo( authUser.getNo() );		
 		userService.modify( userVo );		
-		session.setAttribute("authUser", userVo);
+		session.setAttribute( "authUser", userVo );
 		
 		return "redirect:/";
 	}
