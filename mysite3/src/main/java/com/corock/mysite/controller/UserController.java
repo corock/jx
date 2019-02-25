@@ -1,7 +1,5 @@
 package com.corock.mysite.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.corock.mysite.service.UserService;
 import com.corock.mysite.vo.UserVO;
 import com.corock.security.Auth;
-import com.corock.security.Auth.Role;
+import com.corock.security.AuthUser;
 
 @Controller
 @RequestMapping( "/user" )
@@ -46,35 +44,27 @@ public class UserController {
 	// @Auth( Role.ADMIN )
 	@Auth
 	@RequestMapping( value = "/modify", method = RequestMethod.GET )
-	public String modify( HttpSession session, Model model ) {
-		/* access control */
-		long no = ((UserVO) session.getAttribute("authUser")).getNo();
-		UserVO vo = userService.getUser( no );
+	public String modify( @AuthUser UserVO authUser, Model model ) {
+		System.out.println( "modify() authUser: " + authUser );
 		
-		if ( vo != null ) {
-			model.addAttribute( "vo", vo );
-		}
-		
+		UserVO userVo = userService.getUser( authUser.getNo() );
+		model.addAttribute( "userVo", userVo );
 		return "/user/modify";
 	}
 
+	@Auth
 	@RequestMapping( value = "/modify", method = RequestMethod.POST )
-	public String modify( HttpSession session, @ModelAttribute UserVO userVo ) {
-		/* access control(security) */
-		UserVO authUser = null;
-		
-		if ( session != null ) {
-			authUser = (UserVO) session.getAttribute("authUser");
-		}
-		if ( session == null ) {
-			return "/user";
-		}
-		
+	public String modify( @AuthUser UserVO authUser, @ModelAttribute UserVO userVo ) {
+		System.out.println( "modify() authUser: " + authUser );
+		System.out.println( "modify() userVo: " + userVo );
+
 		userVo.setNo( authUser.getNo() );		
-		userService.modify( userVo );		
-		session.setAttribute( "authUser", userVo );
+		userService.modifyUser( userVo );	
 		
-		return "redirect:/";
+		// Modify authUser of session
+		authUser.setName( userVo.getName() );
+		
+		return "redirect:/user/modify?result=success";
 	}
 
 }

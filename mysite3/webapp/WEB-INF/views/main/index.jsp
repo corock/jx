@@ -17,7 +17,7 @@
 			<div id="content">
 				<div id="site-introduction">
 					<img id="profile" src="${pageContext.servletContext.contextPath}/assets/images/profile.jpg" style="width: 120px">
-					<h2>안녕하세요. CoRock의  MySite입니다.</h2>
+					<h2>${site.welcome}</h2>
 					<p>
 						이 사이트는  웹 프로그래밍 실습과제 사이트입니다.<br>
 						메뉴는 사이트 소개, 방명록, 게시판이 있습니다.<br>

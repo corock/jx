@@ -8,6 +8,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.corock.mysite.vo.UserVO;
+import com.corock.security.Auth.Role;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
@@ -22,27 +23,30 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// 2. Casting
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		
-		// 3. Get @Auth from method
+		// 3-1. Get @Auth from method
 		Auth auth = handlerMethod.getMethodAnnotation( Auth.class );
 		
-		// 4. If @Auth isn't found from method
+		// 3-2. If @Auth doesn't exist from method, get @Auth of class type
+		if ( auth == null ) {
+			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation( Auth.class );
+		}
+		
+		// 4. If @Auth doesn't exist from method
 		if ( auth == null ) {
 			return true;
 		}
 		
-		// Role role = auth.value();
-		
-		// 5. Because of setting @Auth, check whether sign in(authentication) succeed or not
+		// 5-1. Because of setting @Auth, check whether sign in(authentication) succeed or not
 		HttpSession session = request.getSession();
-		UserVO authUser = null;
-		if ( session != null ) {
-			authUser = (UserVO) session.getAttribute( "authUser" );
-		}
+		UserVO authUser = ( session != null ) ? null : (UserVO) session.getAttribute( "authUser" );
 		
 		if ( authUser == null ) {
 			response.sendRedirect( request.getContextPath() + "/user/login" );
 			return false;
 		}
+		
+		// 5-2. Compare role
+		Role role = auth.value();
 		
 		// 6. Access permit
 		return true;

@@ -11,7 +11,12 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- Register validator, conversionService and messageConverter automatically -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<!-- Register for handler argument resolver of controller -->
+		<mvc:argument-resolvers>
+			<bean class="com.corock.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
 	<!-- Default servlet delegate handler of servlet container -->
 	<mvc:default-servlet-handler />
@@ -23,10 +28,12 @@
 	<!-- Interceptors -->
 	<mvc:interceptors>
 		<!-- MyInterceptor01 -->
-		<!-- <mvc:interceptor>
+	<!--
+		<mvc:interceptor>
 			<mvc:mapping path="/guestbook/**" />
 			<bean class="com.corock.mysite.interceptor.MyInterceptor02" />
-		</mvc:interceptor> -->
+		</mvc:interceptor>
+	 -->
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth" />
