@@ -10,17 +10,44 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- register validator, conversionService and messageConverter automatically -->
+	<!-- Register validator, conversionService and messageConverter automatically -->
 	<mvc:annotation-driven />
 
-	<!-- default servlet delegate handler of servlet container -->
+	<!-- Default servlet delegate handler of servlet container -->
 	<mvc:default-servlet-handler />
 
-	<!-- configuring annotation settings -->
+	<!-- Configuring annotation settings -->
 	<context:annotation-config />
 	<context:component-scan base-package="com.corock.mysite.controller" />
 
-	<!-- basic view(+ name) resolver settings -->
+	<!-- Interceptors -->
+	<mvc:interceptors>
+		<!-- MyInterceptor01 -->
+		<!-- <mvc:interceptor>
+			<mvc:mapping path="/guestbook/**" />
+			<bean class="com.corock.mysite.interceptor.MyInterceptor02" />
+		</mvc:interceptor> -->
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.corock.security.AuthLoginInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.corock.security.AuthLogoutInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/*" />			
+			<bean class="com.corock.security.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- Basic view(+ name) resolver settings -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />

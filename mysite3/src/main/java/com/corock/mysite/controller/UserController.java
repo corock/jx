@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.corock.mysite.service.UserService;
 import com.corock.mysite.vo.UserVO;
+import com.corock.security.Auth;
+import com.corock.security.Auth.Role;
 
 @Controller
 @RequestMapping( "/user" )
@@ -39,31 +41,10 @@ public class UserController {
 	public String login() {
 		return "/user/login";
 	}
-
-	@RequestMapping( value = "/login", method = RequestMethod.POST )
-	public String login( HttpSession session, @ModelAttribute UserVO vo ) {
-		UserVO authUser = userService.getUser( vo );
-		
-		if ( authUser == null ) {
-			/**
-			 * fail to auth
-			 * session.setAttribute( "result", "fail" );
-			 * return "/user/login";
-			 */
-			return "redirect:/user/login?result=fail";
-		}
-		
-		/* auth success -> auth processing */
-		session.setAttribute( "authUser", authUser );
-		return "redirect:/";
-	}
 	
-	@RequestMapping( value = "/logout" )
-	public String logout( HttpSession session, @ModelAttribute UserVO userVo ) {
-		userService.logout( session );
-		return "redirect:/";
-	}
-
+	// @Auth( value = "ADMIN", method = 2 )
+	// @Auth( Role.ADMIN )
+	@Auth
 	@RequestMapping( value = "/modify", method = RequestMethod.GET )
 	public String modify( HttpSession session, Model model ) {
 		/* access control */
