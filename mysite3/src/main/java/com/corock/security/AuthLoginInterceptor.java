@@ -23,18 +23,20 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 				WebApplicationContextUtils.getWebApplicationContext( request.getServletContext() );
 		UserService userService = ac.getBean( UserService.class ); 
 	*/
+
 		String email = request.getParameter( "email" );
 		String password = request.getParameter( "password" );
 		
 		UserVO userVo = userService.getUser( email, password );
 		if ( userVo == null ) {
+			request.getSession().setAttribute( "result", "fail" );
 			response.sendRedirect( request.getContextPath() + "/user/login" );
 			return false;
 		}
 		
 		// 로그인 처리
 		HttpSession session = request.getSession( true );
-//		session.setAttribute( "authUser", userVo );
+		session.setAttribute( "authUser", userVo );
 		
 		response.sendRedirect( request.getContextPath() + "/" );	
 		return false;

@@ -38,7 +38,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		
 		// 5-1. Because of setting @Auth, check whether sign in(authentication) succeed or not
 		HttpSession session = request.getSession();
-		UserVO authUser = ( session != null ) ? null : (UserVO) session.getAttribute( "authUser" );
+		UserVO authUser = ( session == null ) ? null : (UserVO) session.getAttribute( "authUser" );
 		
 		if ( authUser == null ) {
 			response.sendRedirect( request.getContextPath() + "/user/login" );

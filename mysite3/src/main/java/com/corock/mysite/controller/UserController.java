@@ -64,7 +64,7 @@ public class UserController {
 		// Modify authUser of session
 		authUser.setName( userVo.getName() );
 		
-		return "redirect:/user/modify?result=success";
+		return "redirect:/";
 	}
 
 }
