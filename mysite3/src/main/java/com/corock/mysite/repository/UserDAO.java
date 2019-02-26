@@ -30,22 +30,11 @@ public class UserDAO {
 	}
 	
 	public UserVO get( String email, String password ) throws UserDAOException {
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		
 		Map<String, String> map = new HashMap<>();
 		map.put( "email", email );
 		map.put( "password", password );
 
-		UserVO userVo = sqlSession.selectOne( "user.getByEmailAndPassword", map ); 
-		
-		stopWatch.stop();
-		Long totalTime = stopWatch.getTotalTimeMillis();
-		
-		// Working with logging
-		System.out.println("totalTime: " + totalTime);
-
-		return userVo;
+		return sqlSession.selectOne( "user.getByEmailAndPassword", map );
 	}
 	
 	public int insert( UserVO vo ) {
