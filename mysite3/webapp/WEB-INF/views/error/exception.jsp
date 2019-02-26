@@ -1,21 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Exception</title>
 </head>
 <body>
-	<h1>죄송합니다.</h1>
+	<h2>Ooops! - ${uri}</h2>
 	<p>
-		<!-- 사용자 요청이 갑자기 많아져서 서비스에 일시적인 장애가 발생하였습니다.<br>
-		잠시 후, 다시 시도해 주세요. -->
-		<strong>예외 발생</strong>
+		죄송합니다.<br>
+		서비스 사용 중 장애가 발생했습니다.<br>
 	</p>
 	<hr>
-	<p style="color: #f00;">
-		${errors}
-	</p>
+	<pre style="color: red; font-weight: bold;">
+		${exception}
+	</pre>
 </body>
 </html>
