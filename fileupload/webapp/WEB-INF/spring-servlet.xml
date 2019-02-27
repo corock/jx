@@ -15,6 +15,9 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven />
+	
+	<!-- the mvc resources mapping url(virtual) -->
+	<mvc:resources mapping="/images/**" location="file:/uploads/" />
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.corock.fileupload.controller" />
