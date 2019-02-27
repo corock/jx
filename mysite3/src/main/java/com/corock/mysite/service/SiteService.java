@@ -12,11 +12,11 @@ public class SiteService {
 	@Autowired
 	private SiteDAO siteDao;
 	
-	public SiteVO getSite() {
+	public SiteVO getSiteInformation() {
 		return siteDao.get();
 	}
 
-	public void update( SiteVO siteVo ) {
+	public void updateSiteInformation( SiteVO siteVo ) {
 		siteDao.update( siteVo );
 	}
 

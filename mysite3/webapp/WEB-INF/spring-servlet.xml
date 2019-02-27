@@ -39,6 +39,9 @@
 			<bean class="com.corock.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
+	
+	<!-- the mvc resources mapping url(virtual) -->
+	<mvc:resources mapping="/uploads/images/**" location="file:/uploads/" />
 
 	<!-- Default servlet delegate handler of servlet container -->
 	<mvc:default-servlet-handler />
@@ -75,6 +78,16 @@
 			<bean class="com.corock.security.AuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	<!-- multipart resolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- byte size that is able to maximum upload -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- maximum byte size that is able to store to memory before creating temporary file to disk -->
+		<!-- property name="maxInMemorySize" value="52428800" / -->
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
 
 	<!-- Basic view(+ name) resolver settings -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

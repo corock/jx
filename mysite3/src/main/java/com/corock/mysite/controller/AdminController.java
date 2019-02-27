@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.corock.mysite.service.FileUploadService;
 import com.corock.mysite.service.SiteService;
 import com.corock.mysite.vo.SiteVO;
 import com.corock.mysite.vo.UserVO;
@@ -22,11 +25,14 @@ public class AdminController {
 	@Autowired
 	private SiteService siteService;
 	
+	@Autowired
+	private FileUploadService fileUploadService;
+
 	@Auth( Role.ADMIN )
 	@RequestMapping({ "", "/main" })
 	public String main( @AuthUser UserVO authUser, Model model ) {
 		
-		SiteVO siteVo = siteService.getSite();
+		SiteVO siteVo = siteService.getSiteInformation();
 		model.addAttribute( "siteVo", siteVo );
 
 //		System.out.println( "main() authUser: " + authUser );
@@ -41,11 +47,17 @@ public class AdminController {
 		return "admin/board";
 	}
 	
-	@Auth( Role.ADMIN ) 
+	@Auth( Role.ADMIN )
 	@RequestMapping( value = "/main/update", method = RequestMethod.POST )
-	public String update( @ModelAttribute SiteVO siteVo ) {
-		siteService.update( siteVo );
-		return "redirect:/";
+	public String updateSite( @ModelAttribute SiteVO siteVo,
+							  @RequestParam(value = "upload-profile") MultipartFile multipartFile ) {
+		
+		String profile = fileUploadService.restore( multipartFile );
+		siteVo.setProfile( profile );
+		
+		siteService.updateSiteInformation( siteVo );
+		
+		return "redirect:/admin/main";
 	}
 	
 }
