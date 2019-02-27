@@ -15,29 +15,27 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath}/board">
-					<input type="hidden" name="a" value="reply">					
-					<input type="hidden" name="no" value="${requestScope.vo.no}">
-					<input type="hidden" name="group_no" value="${requestScope.vo.groupNo}">
-					<input type="hidden" name="order_no" value="${requestScope.vo.orderNo}">
-					<input type="hidden" name="depth" value="${requestScope.vo.depth}">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath}/board/write">
+					<input type="hidden" name="groupNo" value="${boardVo.groupNo}">
+					<input type="hidden" name="orderNo" value="${boardVo.orderNo}">
+					<input type="hidden" name="depth" value="${boardVo.depth}">
+					<input type="hidden" name="p" value="${param.p}">
+					<input type="hidden" name="kwd" value="${param.kwd}">
 					<table class="tbl-ex">
-						<tr>
-							<th colspan="2">답글 달기</th>
-						</tr>
+						<tr><th colspan="2">답글 달기</th></tr>
 						<tr>
 							<td class="label">제목</td>
 							<td><input type="text" name="title" value=""></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<td>
-								<textarea id="content" name="content"></textarea>
-							</td>
+							<td><textarea id="content" name="content"></textarea></td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath}/board?a=view&no=${vo.no}">취소</a>
+						<a href="${pageContext.servletContext.contextPath}/board?p=${param.p}&kwd=${param.kwd}">
+							취소
+						</a>
 						<input type="submit" value="답글 달기">
 					</div>
 				</form>

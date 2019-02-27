@@ -2,23 +2,23 @@ package com.corock.mysite.vo;
 
 public class BoardVO {
 
-	private long no;
+	private Long no;
 	private String title;
-	private String contents;
-	private String writeDate;
-	private int hit;
-	private int groupNo;
-	private int orderNo;
-	private int depth;
+	private String content;
+	private String regDate;
+	private Integer hit;
+	private Integer groupNo;
+	private Integer orderNo;
+	private Integer depth;
 
-	private long userNo;
+	private Long userNo;
 	private String userName;
 
-	public long getNo() {
+	public Long getNo() {
 		return no;
 	}
 
-	public void setNo(long no) {
+	public void setNo(Long no) {
 		this.no = no;
 	}
 
@@ -30,59 +30,59 @@ public class BoardVO {
 		this.title = title;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public String getWriteDate() {
-		return writeDate;
+	public String getRegDate() {
+		return regDate;
 	}
 
-	public void setWriteDate(String writeDate) {
-		this.writeDate = writeDate;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 
-	public int getHit() {
+	public Integer getHit() {
 		return hit;
 	}
 
-	public void setHit(int hit) {
+	public void setHit(Integer hit) {
 		this.hit = hit;
 	}
 
-	public int getGroupNo() {
+	public Integer getGroupNo() {
 		return groupNo;
 	}
 
-	public void setGroupNo(int groupNo) {
+	public void setGroupNo(Integer groupNo) {
 		this.groupNo = groupNo;
 	}
 
-	public int getOrderNo() {
+	public Integer getOrderNo() {
 		return orderNo;
 	}
 
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
 	}
 
-	public int getDepth() {
+	public Integer getDepth() {
 		return depth;
 	}
 
-	public void setDepth(int depth) {
+	public void setDepth(Integer depth) {
 		this.depth = depth;
 	}
 
-	public long getUserNo() {
+	public Long getUserNo() {
 		return userNo;
 	}
 
-	public void setUserNo(long userNo) {
+	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
 	}
 
@@ -96,9 +96,9 @@ public class BoardVO {
 
 	@Override
 	public String toString() {
-		return "BoardVO [no=" + no + ", title=" + title + ", contents=" + contents + ", writeDate=" + writeDate
-				+ ", hit=" + hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo="
-				+ userNo + ", userName=" + userName + "]";
+		return "BoardVO [no=" + no + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", hit="
+				+ hit + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
+				+ ", userName=" + userName + "]";
 	}
 
 }
