@@ -122,8 +122,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-				<form id="join-form" name="joinForm" method="post"
-					  action="${pageContext.servletContext.contextPath}/user/join">
+				<form:form modelAttribute="userVO" id="join-form" name="joinForm" method="post"
+						   action="${pageContext.servletContext.contextPath}/user/join">
+						   
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="${userVo.name}">
 					<spring:hasBindErrors name="userVO">
@@ -139,13 +140,16 @@
 					</spring:hasBindErrors>
 										
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="${userVo.email}">
+					<form:input path="email" />
 					<img id="img-checkemail" style="width: 25px; display: none"
 						 src="${pageContext.servletContext.contextPath}/assets/images/check.png" />
 					<input id="btn-checkemail" type="button" value="이메일 확인">
+					<p style="margin: 0; padding: 0; font-weight: bold; color: red; text-align: left">
+						<form:errors path="email" />
+					</p>
 					
 					<label class="block-label">패스워드</label>
-					<input name="password" type="password" value="">
+					<form:password path="password" />
 					
 					<fieldset>
 						<legend>성별</legend>
@@ -160,7 +164,7 @@
 					</fieldset>
 					
 					<input type="submit" value="가입하기">
-				</form>
+				</form:form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
