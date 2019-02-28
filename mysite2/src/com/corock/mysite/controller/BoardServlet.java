@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.corock.mvc.action.AbstractActionFactory;
 import com.corock.mvc.action.Action;
-import com.corock.mvc.action.board.BoardActionFactory;
+import com.corock.mysite.action.board.BoardActionFactory;
 
 @WebServlet("/board")
 public class BoardServlet extends HttpServlet {
