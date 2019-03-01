@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.corock.mvc.action.AbstractActionFactory;
 import com.corock.mvc.action.Action;
-import com.corock.mvc.action.main.MainActionFactory;
+import com.corock.mysite.action.main.MainActionFactory;
 
 // @WebServlet("")
 public class MainServlet extends HttpServlet {

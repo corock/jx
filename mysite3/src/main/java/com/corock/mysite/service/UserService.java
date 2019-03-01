@@ -1,7 +1,5 @@
 package com.corock.mysite.service;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,33 +13,22 @@ public class UserService {
 	private UserDAO userDao;
 
 	public void join( UserVO userVo ) {
-		// 1. insert into DB membership information
+		// 1. Insert into DB membership information
 		userDao.insert( userVo );
 		
-		// 2. send to email to confirm address
+		// 2. Send to email to confirm address
 	}
 
-	public UserVO getUser( UserVO vo ) {
-		UserVO userVo = userDao.get( vo.getEmail(), vo.getPassword() );
-		return userVo;
+	public UserVO getUser( String email, String password ) {
+		return userDao.get( email, password );
 	}
 
-	public UserVO getUser( long no ) {
-		UserVO userVo = userDao.get( no );
-		return userVo;
+	public UserVO getUser( Long no ) {
+		return userDao.get( no );
 	}
 
-	public void logout( HttpSession session ) {
-		if ( session != null && session.getAttribute("authUser") != null ) {
-			// logout processing
-			session.removeAttribute( "authUser" );
-			session.invalidate();
-			return;
-		}
-	}
-
-	public void modify( UserVO userVo ) {
-		userDao.update( userVo );
+	public boolean modifyUser( UserVO userVo ) {
+		return userDao.update( userVo ) == 1;
 	}
 	
 }

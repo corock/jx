@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.corock.mvc.action.AbstractActionFactory;
 import com.corock.mvc.action.Action;
-import com.corock.mvc.action.guestbook.GuestbookActionFactory;
+import com.corock.mysite.action.guestbook.GuestbookActionFactory;
 
 @WebServlet("/guestbook")
 public class GuestbookServlet extends HttpServlet {

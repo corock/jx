@@ -1,13 +1,26 @@
 package com.corock.mysite.vo;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UserVO {
 
-	private long no;
+	private Long no;
+	
+	@NotEmpty
+	@Length( min = 2, max = 8 )
 	private String name;
+	
+	@NotEmpty
+	@Email
 	private String email;
+	
 	private String password;
+	
 	private String gender;
 	private String join_date;
+	private String role;
 
 	public long getNo() {
 		return no;
@@ -57,10 +70,18 @@ public class UserVO {
 		this.join_date = join_date;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVO [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", gender="
-				+ gender + ", join_date=" + join_date + "]";
+				+ gender + ", join_date=" + join_date + ", role=" + role + "]";
 	}
 
 }

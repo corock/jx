@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.corock.mvc.action.AbstractActionFactory;
 import com.corock.mvc.action.Action;
-import com.corock.mvc.action.user.UserActionFactory;
+import com.corock.mysite.action.user.UserActionFactory;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {

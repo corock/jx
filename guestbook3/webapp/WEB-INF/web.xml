@@ -24,7 +24,6 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-
 	<!-- Encoding Filter(한글처리, utf-8) -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>

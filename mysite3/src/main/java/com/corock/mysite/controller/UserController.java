@@ -1,16 +1,19 @@
 package com.corock.mysite.controller;
 
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.corock.mysite.service.UserService;
 import com.corock.mysite.vo.UserVO;
+import com.corock.security.Auth;
+import com.corock.security.AuthUser;
 
 @Controller
 @RequestMapping( "/user" )
@@ -20,12 +23,23 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping( value = "/join", method = RequestMethod.GET )
-	public String join() {
+	public String join( @ModelAttribute UserVO userVo ) {
 		return "/user/join";
 	}
 
 	@RequestMapping( value = "/join", method = RequestMethod.POST )
-	public String join( @ModelAttribute UserVO userVo ) {
+	public String join( @ModelAttribute @Valid UserVO userVo,
+						BindingResult result, Model model ) {
+		
+		if ( result.hasErrors() ) {
+//			List<ObjectError> list = result.getAllErrors();
+//			for ( ObjectError error : list ) {
+//				System.out.println( error );
+//			}
+			model.addAllAttributes( result.getModel() );
+			return "user/join";
+		}
+		
 		userService.join( userVo );
 		return "redirect:/user/joinsuccess";
 	}
@@ -39,55 +53,30 @@ public class UserController {
 	public String login() {
 		return "/user/login";
 	}
-
-	@RequestMapping( value = "/login", method = RequestMethod.POST )
-	public String login( HttpSession session, @ModelAttribute UserVO vo ) {
-		UserVO authUser = userService.getUser( vo );
-		
-		if ( authUser == null ) {
-			/* fail to auth */
-			session.setAttribute( "result", "fail" );
-			return "/user/login";
-		}
-		
-		/* auth success -> auth processing */
-		session.setAttribute( "authUser", authUser );
-		return "redirect:/";
-	}
 	
-	@RequestMapping( value = "/logout" )
-	public String logout( HttpSession session, @ModelAttribute UserVO userVo ) {
-		userService.logout( session );
-		return "redirect:/";
-	}
-
+	// @Auth( value = "ADMIN", method = 2 )
+	// @Auth( Role.ADMIN )
+	@Auth
 	@RequestMapping( value = "/modify", method = RequestMethod.GET )
-	public String modify( HttpSession session, Model model ) {
-		long no = ( (UserVO) session.getAttribute("authUser") ).getNo();
-		UserVO vo = userService.getUser( no );
+	public String modify( @AuthUser UserVO authUser, Model model ) {
+		System.out.println( "modify() authUser: " + authUser );
 		
-		if ( vo != null ) {
-			model.addAttribute( "vo", vo );
-		}
-		
+		UserVO userVo = userService.getUser( authUser.getNo() );
+		model.addAttribute( "userVo", userVo );
 		return "/user/modify";
 	}
 
+	@Auth
 	@RequestMapping( value = "/modify", method = RequestMethod.POST )
-	public String modify( HttpSession session, @ModelAttribute UserVO userVo ) {
-		/* access control(security) */
-		UserVO authUser = null;
+	public String modify( @AuthUser UserVO authUser, @ModelAttribute UserVO userVo ) {
+		System.out.println( "modify() authUser: " + authUser );
+		System.out.println( "modify() userVo: " + userVo );
+
+		userVo.setNo( authUser.getNo() );		
+		userService.modifyUser( userVo );	
 		
-		if (session != null) {
-			authUser = (UserVO) session.getAttribute("authUser");
-		}
-		if (session == null) {
-			return "/user";
-		}
-		
-		userVo.setNo(authUser.getNo());		
-		userService.modify( userVo );		
-		session.setAttribute("authUser", userVo);
+		// Modify authUser of session
+		authUser.setName( userVo.getName() );
 		
 		return "redirect:/";
 	}

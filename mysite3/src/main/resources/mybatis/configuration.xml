@@ -5,11 +5,13 @@
 		<typeAlias alias="uservo" type="com.corock.mysite.vo.UserVO" />
  		<typeAlias alias="guestbookvo" type="com.corock.mysite.vo.GuestbookVO" />
 		<typeAlias alias="boardvo" type="com.corock.mysite.vo.BoardVO" />
+		<typeAlias alias="sitevo" type="com.corock.mysite.vo.SiteVO" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
+		<mapper resource="mybatis/mappers/site.xml" />
 	</mappers>
 
 </configuration>

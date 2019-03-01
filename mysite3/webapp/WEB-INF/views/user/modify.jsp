@@ -16,12 +16,12 @@
 		<div id="content">
 			<div id="user">
 				<form id="join-form" name="modifyForm" method="post" action="${pageContext.servletContext.contextPath}/user/modify">
-					<input type="hidden" name="no" value="${vo.no}">
+					<input type="hidden" name="no" value="${userVo.no}">
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="">
 
 					<label class="block-label" for="email">이메일</label>
-					<h3>${vo.email}</h3>
+					<h3>${userVo.email}</h3>
 					
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
@@ -29,7 +29,7 @@
 					<fieldset>
 						<legend>성별</legend>
 						<c:choose>
-							<c:when test="${vo.gender eq 'female'}">							
+							<c:when test='${userVo.gender eq "female"}'>							
 								<label>남</label> <input type="radio" name="gender" value="male">
 								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
 							</c:when>
@@ -49,4 +49,9 @@
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
+<c:if test='${param.result == "success"}'>
+	<script>
+		alert( "정상적으로 수정되었습니다." );
+	</script>
+</c:if>
 </html>
