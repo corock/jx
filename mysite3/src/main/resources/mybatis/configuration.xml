@@ -6,12 +6,14 @@
  		<typeAlias alias="guestbookvo" type="com.corock.mysite.vo.GuestbookVO" />
 		<typeAlias alias="boardvo" type="com.corock.mysite.vo.BoardVO" />
 		<typeAlias alias="sitevo" type="com.corock.mysite.vo.SiteVO" />
+		<typeAlias alias="galleryvo" type="com.corock.mysite.vo.GalleryVO" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<mapper resource="mybatis/mappers/board.xml" />
 		<mapper resource="mybatis/mappers/site.xml" />
+		<mapper resource="mybatis/mappers/gallery.xml" />
 	</mappers>
 
 </configuration>
