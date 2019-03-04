@@ -4,6 +4,7 @@ public class User {
 
 	private Long no;
 	private String name = "CoRock";
+	private Friend friend;
 
 	public User() {
 	}
@@ -17,6 +18,14 @@ public class User {
 		this.name = name;
 	}
 
+	public Long getNo() {
+		return no;
+	}
+
+	public void setNo(Long no) {
+		this.no = no;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -25,9 +34,17 @@ public class User {
 		this.name = name;
 	}
 
+	public Friend getFriend() {
+		return friend;
+	}
+
+	public void setFriend(Friend friend) {
+		this.friend = friend;
+	}
+
 	@Override
 	public String toString() {
-		return "User [no=" + no + ", name=" + name + "]";
+		return "User [no=" + no + ", name=" + name + ", friend=" + friend + "]";
 	}
 
 }

@@ -39,6 +39,12 @@ public class Main {
 
 		User user3 = (User) ac.getBean( "usr3" );
 		System.out.println( user3 );
+		
+		Friend friend = (Friend) ac.getBean( "friend" );
+		System.out.println( friend );
+
+		User user4 = (User) ac.getBean( "usr4" );
+		System.out.println( user4 );
 	}
 
 	public static void testBeanFactory() {
