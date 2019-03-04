@@ -16,4 +16,11 @@ public class UserService {
 		userDao.insert( userVo );
 	}
 
+	/**
+	 * @see #AuthLoginInterceptor
+	 */
+	public UserVO getUser( String id, String password ) {
+		return userDao.get( id, password );
+	}
+
 }

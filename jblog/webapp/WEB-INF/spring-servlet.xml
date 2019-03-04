@@ -27,5 +27,26 @@
 	<!-- Configuring annotation settings -->
 	<context:annotation-config />
 	<context:component-scan base-package="com.corock.jblog.controller" />
+	
+	<!-- Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.corock.security.AuthLoginInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.corock.security.AuthLogoutInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/user/auth" />
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/*" />
+			<bean class="com.corock.security.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>

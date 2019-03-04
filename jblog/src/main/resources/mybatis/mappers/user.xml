@@ -8,5 +8,14 @@
 				 VALUES ( NULL, #{id}, #{name}, PASSWORD(#{password}), now() )
 		]]>
 	</insert>
+	
+	<select id="getByEmailAndPassword" parameterType="uservo" resultType="uservo">
+		<![CDATA[
+			SELECT no, name
+			  FROM User
+			 WHERE id = #{id}
+			   AND password = PASSWORD(#{password})
+		]]>
+	</select>
 
 </mapper>

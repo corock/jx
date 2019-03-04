@@ -37,9 +37,4 @@ public class UserController {
 		return "user/login";
 	}
 
-//	@RequestMapping( value = "/login", method = RequestMethod.POST )
-//	public String login( @ModelAttribute UserVO userVo ) {
-//		return "";
-//	}
-
 }
