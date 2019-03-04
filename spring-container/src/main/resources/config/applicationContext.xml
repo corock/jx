@@ -17,6 +17,13 @@
 	
 	<bean id="usr2" class="com.corock.springcontainer.User">
 		<constructor-arg value="둘리" />
+		<property name="friends">
+			<list>
+				<value>마이콜</value>
+				<value>도우넛</value>
+				<value>또치</value>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="usr3" class="com.corock.springcontainer.User">

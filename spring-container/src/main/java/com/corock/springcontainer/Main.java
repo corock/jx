@@ -35,11 +35,11 @@ public class Main {
 		// ac.getBean( User.class );
 		
 		User user2 = (User) ac.getBean( "usr2" );
-		System.out.println( user2.getName() );
+		System.out.println( user2 );
 
 		User user3 = (User) ac.getBean( "usr3" );
 		System.out.println( user3 );
-		
+
 		Friend friend = (Friend) ac.getBean( "friend" );
 		System.out.println( friend );
 
@@ -61,5 +61,5 @@ public class Main {
 		user = (User1) bf2.getBean( User1.class );
 		System.out.println( user.getName() );
 	}
-	
+
 }

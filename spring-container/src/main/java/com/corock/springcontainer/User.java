@@ -1,10 +1,13 @@
 package com.corock.springcontainer;
 
+import java.util.List;
+
 public class User {
 
 	private Long no;
 	private String name = "CoRock";
 	private Friend friend;
+	private List<Friend> friends;
 
 	public User() {
 	}
@@ -42,9 +45,17 @@ public class User {
 		this.friend = friend;
 	}
 
+	public List<Friend> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friend> friends) {
+		this.friends = friends;
+	}
+
 	@Override
 	public String toString() {
-		return "User [no=" + no + ", name=" + name + ", friend=" + friend + "]";
+		return "User [no=" + no + ", name=" + name + ", friend=" + friend + ", friends=" + friends + "]";
 	}
 
 }
