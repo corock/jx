@@ -13,4 +13,15 @@
 
 	<bean id="usr" name="user" class="com.corock.springcontainer.User" />
 
+	<bean class="com.corock.springcontainer.User" />
+	
+	<bean id="usr2" class="com.corock.springcontainer.User">
+		<constructor-arg value="둘리" />
+	</bean>
+
+	<bean id="usr3" class="com.corock.springcontainer.User">
+		<constructor-arg index="1" value="마이콜" />
+		<constructor-arg index="0" value="1" />
+	</bean>
+
 </beans>

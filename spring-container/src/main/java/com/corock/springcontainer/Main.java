@@ -30,6 +30,15 @@ public class Main {
 		// id로 가져오기
 		user = (User) ac.getBean( "usr" );
 		System.out.println( user.getName() );
+		
+		// 오류: 같은 타입의 bean이 2개 이상 존재하면 타입으로 bean을 가져올 수 없다.
+		// ac.getBean( User.class );
+		
+		User user2 = (User) ac.getBean( "usr2" );
+		System.out.println( user2.getName() );
+
+		User user3 = (User) ac.getBean( "usr3" );
+		System.out.println( user3 );
 	}
 
 	public static void testBeanFactory() {
