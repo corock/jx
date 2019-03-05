@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.corock.jblog.service.UserService;
 import com.corock.jblog.vo.UserVO;
 
 @Repository
@@ -15,8 +16,8 @@ public class UserDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void insert( UserVO userVo ) {
-		sqlSession.insert( "user.insert", userVo );
+	public int insert( UserVO userVo ) {
+		return sqlSession.insert( "user.insert", userVo );
 	}
 
 	public UserVO get(String id, String password) {
@@ -25,6 +26,13 @@ public class UserDAO {
 		map.put( "password", password );
 		
 		return sqlSession.selectOne( "user.getByEmailAndPassword", map );
+	}
+
+	/**
+	 * @see {@link UserService#getNoById}
+	 */	
+	public Long get( String id ) {
+		return sqlSession.selectOne( "user.getById", id );
 	}
 
 }

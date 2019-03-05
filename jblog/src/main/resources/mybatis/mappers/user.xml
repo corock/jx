@@ -11,11 +11,15 @@
 	
 	<select id="getByEmailAndPassword" parameterType="uservo" resultType="uservo">
 		<![CDATA[
-			SELECT no, name
+			SELECT no, id, name
 			  FROM User
 			 WHERE id = #{id}
 			   AND password = PASSWORD(#{password})
 		]]>
 	</select>
 
+	<select id="getById" parameterType="string" resultType="long">
+		<![CDATA[SELECT no FROM User WHERE id = #{id}]]>
+	</select>
+	
 </mapper>
