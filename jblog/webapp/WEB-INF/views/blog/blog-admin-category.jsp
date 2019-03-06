@@ -7,7 +7,98 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
-<Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+	$(function() {
+		var render = function( vo, mode ) {
+			var html = "<tr>" +
+						   "<td>" + vo.no + "</td>" +
+						   "<td>" + vo.name + "</td>" +
+						   "<td>" + vo.postCount + "</td>" +
+						   "<td>" + vo.description + "</td>" +
+						   "<td>" +
+								"<img style='cursor: pointer;' id='delete-img' class='delete-img'" +
+									 "src='${pageContext.request.contextPath}/assets/images/delete.jpg'>" +
+						   "</td>" +
+					   "</tr>";
+			
+			if ( mode == true ) {
+				$( "#list-category" ).prepend( html );
+			} else {
+				$( "#list-category" ).append( html );
+			}
+		}
+		
+		/**
+		 * 카테고리 리스트 출력
+		 */
+		$.ajax({
+			url: "${pageContext.request.contextPath}/${authUser.id}/admin/category/api/list",
+			type: "get",
+			dataType: "json",
+			data: "",
+			success: function( response ) {
+				if ( response.result == "fail" ) {
+					console.warn( response.message );
+					return;
+				}
+
+				// rendering
+				$.each( response.data, function(index, vo) {
+					render( vo, false );
+				});
+			},
+			error: function( jqXHR, status, e ) {
+				console.error( status + ":" + e);
+			}
+		});
+		
+		/**
+		 * 카테고리 추가
+		 */
+		$( "#add-form" ).submit( function( event ) {
+			// submit의 기본 동작(post)을 막아야 한다.
+			event.preventDefault();
+			
+			// console.log( $( "#cat-name" ).val() );
+			// console.log( $( "#cat-desc" ).val() );
+			
+			var vo = { };
+			vo.name = $( "#cat-name" ).val();
+			vo.description = $( "#cat-desc" ).val();
+			
+			// ajax connection
+			$.ajax({
+				url: "${pageContext.request.contextPath}/${authUser.id}/admin/category/api/add",
+				type: "post",
+				dataType: "json",
+				data: JSON.stringify( vo ),
+				contentType: 'application/json',
+				success: function( response ) {
+					if ( response.result == "fail" ) {
+						console.error( response.message );
+						return;
+					}
+					
+					// rendering
+					render( response.data, true );
+					
+					// reset form
+					console.log( $("#add-form") );
+					$( "#add-form" )[0].reset();
+				},
+				error: function( jqXHR, status, e ) {
+					console.error( status + " : " + e );
+				}
+			});
+		} );
+		
+		/**
+		 * 카테고리 삭제
+		 */
+	});
+</script>
 </head>
 <body>
 	<div id="container">
@@ -18,51 +109,39 @@
 					<c:param name="menu" value="category" />
 				</c:import>
 		      	<table class="admin-cat">
-		      		<tr>
-		      			<th>번호</th>
-		      			<th>카테고리명</th>
-		      			<th>포스트 수</th>
-		      			<th>설명</th>
-		      			<th>삭제</th>      			
-		      		</tr>
-					<tr>
-						<td>3</td>
-						<td>미분류</td>
-						<td>10</td>
-						<td>카테고리를 지정하지 않은 경우</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>  
-					<tr>
-						<td>2</td>
-						<td>스프링 스터디</td>
-						<td>20</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>스프링 프로젝트</td>
-						<td>15</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>					  
+		      		<thead>
+			      		<tr>
+			      			<th>번호</th>
+			      			<th>카테고리명</th>
+			      			<th>포스트 수</th>
+							<th>설명</th>
+			      			<th>삭제</th>      			
+			      		</tr>
+		      		</thead>
+		      		
+		      		<tbody id="list-category">
+						<!-- ajax -->
+					</tbody>
+					
 				</table>
       	
       			<h4 class="n-c">새로운 카테고리 추가</h4>
-		      	<table id="admin-cat-add">
-		      		<tr>
-		      			<td class="t">카테고리명</td>
-		      			<td><input type="text" name="name"></td>
-		      		</tr>
-		      		<tr>
-		      			<td class="t">설명</td>
-		      			<td><input type="text" name="desc"></td>
-		      		</tr>
-		      		<tr>
-		      			<td class="s">&nbsp;</td>
-		      			<td><input type="submit" value="카테고리 추가"></td>
-		      		</tr>      		      		
-		      	</table> 
+      			<form id="add-form" action="" method="post">
+			      	<table id="admin-cat-add">
+			      		<tr>
+			      			<td class="t">카테고리명</td>
+			      			<td><input type="text" id="cat-name" name="name" required></td>
+			      		</tr>
+			      		<tr>
+			      			<td class="t">설명</td>
+			      			<td><input type="text" id="cat-desc" name="description" required></td>
+			      		</tr>
+			      		<tr>
+			      			<td class="s">&nbsp;</td>
+			      			<td><input type="submit" id="btn-cat-add" value="카테고리 추가"></td>
+			      		</tr>      		      		
+			      	</table>
+				</form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/blog-footer.jsp" />

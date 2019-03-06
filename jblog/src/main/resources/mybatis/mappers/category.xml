@@ -2,19 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="category">
-	<insert id="insert" parameterType="long">
+	<insert id="insertDefault" parameterType="long">
 		<![CDATA[
 			INSERT INTO Category
-				 VALUES ( NULL, '기본 카테고리', '아직 카테고리를 지정하지 않았습니다.', now(), #{userNo} )
+				 VALUES ( NULL, '기본 카테고리', '아직 카테고리를 지정하지 않았습니다.', now(), 0, #{userNo} )
 		]]>
 	</insert>
 	
-	<select id="getPostCount" resultType="int">
+	<select id="selectList" parameterType="long" resultType="categoryvo">
 		<![CDATA[
-			SELECT COUNT(*)
-			  FROM Category a, Post b
-			 WHERE a.no = b.category_no
+			  SELECT no, name, description, reg_date AS regDate, post_count AS postCount
+				FROM Category a
+			   WHERE user_no = #{userNo}
+			ORDER BY no DESC;
+		]]>
+	</select>
+
+	<select id="getCategoryNameList" parameterType="long" resultType="categoryvo">
+		<![CDATA[
+			  SELECT name
+				FROM Category a
+			   WHERE user_no = #{userNo}
+			ORDER BY no DESC;
 		]]>
 	</select>
 	
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+			INSERT INTO Category
+				 VALUES ( NULL, #{name}, #{description}, now(), 0, #{userNo} )
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<delete id="delete" parameterType="categoryvo">
+		<![CDATA[
+			DELETE FROM Category
+				  WHERE user_no = #{userNo}
+		]]>
+	</delete>
+
 </mapper>

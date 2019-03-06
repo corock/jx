@@ -25,8 +25,8 @@
 			      				<input type="text" size="60" name="title">
 				      			<select name="category">
 				      				<option>미분류</option>
-				      				<c:forEach items="${list}">			      				
-					      				<option value="${categoryName}">${categoryName}</option>
+				      				<c:forEach items="${list}" var="vo">			      				
+					      				<option value="${vo.no}">${vo.name}</option>
 				      				</c:forEach>
 				      			</select>
 				      		</td>
