@@ -10,20 +10,52 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
+	/**
+	 * 카테고리 삭제
+	 */
+	function deleteImg( no ) {
+		// ajax connection
+		$.ajax({
+			url: "${pageContext.request.contextPath}/${authUser.id}/admin/category/api/delete?no=" + no,
+			type: "get",
+			dataType: "json",
+			data: "",
+			success: function( JSONResult ) {
+				if ( JSONResult.result == "fail" ) {
+					console.error( JSONResult.message );
+					return;
+				}
+	
+				// failed to deletion
+				if ( JSONResult.data === -1 ) {
+					return;
+				}
+				
+				$("tr.cat").remove();
+				num = 1;
+				FetchList();
+			},
+			error: function( jqXHR, status, e ) {
+				console.error( status + " : " + e );
+			}
+		});
+	}
+
 	$(function() {
+		num = 1;
 		var render = function( vo, mode ) {
-			var html = "<tr>" +
-						   "<td>" + vo.no + "</td>" +
+			var html = "<tr class='cat'>" +
+						   "<td>" + (num++) + "</td>" +
 						   "<td>" + vo.name + "</td>" +
 						   "<td>" + vo.postCount + "</td>" +
 						   "<td>" + vo.description + "</td>" +
 						   "<td>" +
-								"<img style='cursor: pointer;' id='delete-img' class='delete-img'" +
+								"<img style='cursor: pointer;' id='delete-img' onclick='javascript: deleteImg(" + vo.no + ");'" +
 									 "src='${pageContext.request.contextPath}/assets/images/delete.jpg'>" +
 						   "</td>" +
 					   "</tr>";
-			
-			if ( mode == true ) {
+
+			if ( mode == false ) {
 				$( "#list-category" ).prepend( html );
 			} else {
 				$( "#list-category" ).append( html );
@@ -33,26 +65,28 @@
 		/**
 		 * 카테고리 리스트 출력
 		 */
-		$.ajax({
-			url: "${pageContext.request.contextPath}/${authUser.id}/admin/category/api/list",
-			type: "get",
-			dataType: "json",
-			data: "",
-			success: function( response ) {
-				if ( response.result == "fail" ) {
-					console.warn( response.message );
-					return;
+		FetchList = function() {
+			$.ajax({
+				url: "${pageContext.request.contextPath}/${authUser.id}/admin/category/api/list",
+				type: "get",
+				dataType: "json",
+				data: "",
+				success: function( response ) {
+					if ( response.result == "fail" ) {
+						console.warn( response.message );
+						return;
+					}
+	
+					// rendering
+					$.each( response.data, function(index, vo) {
+						render( vo, false );
+					});
+				},
+				error: function( jqXHR, status, e ) {
+					console.error( status + ":" + e);
 				}
-
-				// rendering
-				$.each( response.data, function(index, vo) {
-					render( vo, false );
-				});
-			},
-			error: function( jqXHR, status, e ) {
-				console.error( status + ":" + e);
-			}
-		});
+			});
+		}
 		
 		/**
 		 * 카테고리 추가
@@ -82,7 +116,7 @@
 					}
 					
 					// rendering
-					render( response.data, true );
+					render( response.data, false );
 					
 					// reset form
 					console.log( $("#add-form") );
@@ -94,10 +128,9 @@
 			});
 		} );
 		
-		/**
-		 * 카테고리 삭제
-		 */
+		FetchList();
 	});
+
 </script>
 </head>
 <body>
