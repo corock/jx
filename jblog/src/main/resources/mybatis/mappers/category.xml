@@ -38,10 +38,11 @@
 	</insert>
 	
 	<delete id="delete" parameterType="categoryvo">
-		<![CDATA[
-			DELETE FROM Category
-				  WHERE user_no = #{userNo}
-		]]>
+		<![CDATA[DELETE FROM Category WHERE no = #{no}]]>
 	</delete>
-
+	
+	<select id="getNoByUserNo" parameterType="long" resultType="long">
+		<![CDATA[SELECT no FROM Category WHERE user_no = #{userNo}]]>
+	</select>
+	
 </mapper>
