@@ -3,10 +3,7 @@
 
 <mapper namespace="site">
 	<select id="get" resultType="sitevo">
-		<![CDATA[
-			SELECT title, welcome, profile, description
-			  FROM Site
-		]]>
+		<![CDATA[SELECT title, welcome, profile, description FROM Site]]>
 	</select>
 	
 	<update id="update" parameterType="sitevo">
@@ -15,14 +12,11 @@
 			   SET title = #{title},
 				   welcome = #{welcome},
 		]]>
-		<choose>
-			<when test="profile == null or profile == ''">
-				   profile = '/assets/css/images/profile.jpg',
-			</when>
-			<otherwise>
-				   profile = #{profile},
-			</otherwise>
-		</choose>
+		<if test="profile != null">
+			<![CDATA[
+				   profile = #{profile},	
+			]]>
+		</if>
 				   description = #{description}
 	</update>
 
