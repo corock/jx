@@ -1,4 +1,4 @@
-package com.corock.springcontainer;
+package com.corock.springcontainer.user;
 
 import java.util.List;
 
