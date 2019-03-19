@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.corock.springcontainer.soundsystem.CDPlayer;
 import com.corock.springcontainer.soundsystem.CompactDisc;
 import com.corock.springcontainer.videosystem.Avengers;
+import com.corock.springcontainer.videosystem.DVDPack;
 import com.corock.springcontainer.videosystem.DVDPlayer;
 import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 
@@ -47,6 +48,9 @@ public class XMLConfigTest {
 		
 		dvd = (DigitalVideoDisc) appCtx.getBean( "digitalVideoDisc" );
 		System.out.println( dvd );
+		
+		DVDPack dvdPack = appCtx.getBean( DVDPack.class );
+		System.out.println( dvdPack );
 		
 		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
 		dvdPlayer.play();
