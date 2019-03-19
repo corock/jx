@@ -1,10 +1,12 @@
-package com.corock.springcontainer.config.user;
+package config.user;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.corock.springcontainer.user.User;
 
-public class AppConfig01 {
+@Configuration
+public class AppConfig02 {
 
 	@Bean
 	public User user() {
