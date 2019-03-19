@@ -1,8 +1,9 @@
 package com.corock.springcontainer.soundsystem;
 
-import org.springframework.stereotype.Component;
+import javax.inject.Named;
 
-@Component
+//@Component( "Parachutes" )
+@Named( "Parachutes" )
 public class Parachutes implements CompactDisc {
 
 	private String title = "Yellow";

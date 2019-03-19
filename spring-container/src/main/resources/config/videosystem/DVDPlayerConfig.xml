@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 01. 간단한 빈 설정 -->
+	<!-- <bean class="com.corock.springcontainer.videosystem.Avengers" /> -->
+
+	<!-- 02. 설정된 빈에 ID 부여하기 -->
+	<bean id="digitalVideoDisc" class="com.corock.springcontainer.videosystem.Avengers" />
+
+	<!-- 03. 생성자를 통한 빈 주입 01 -->
+<!-- 	<bean id="dvdPlayer" class="com.corock.springcontainer.videosystem.DVDPlayer">
+		<constructor-arg ref="digitalVideoDisc" />
+	</bean> -->
+
+	<!-- 04. 생성자를 통한 빈 주입 02: c-namespace 의 argument name 사용 (since spring 3.0) -->
+<!-- 	<bean id="dvdPlayer"
+		  class="com.corock.springcontainer.videosystem.DVDPlayer"
+		  c:dvd-ref="digitalVideoDisc" /> -->
+
+	<!-- 05. 생성자를 통한 빈 주입 03: c-namespace 의 index 사용 -->
+<!-- 	<bean id="dvdPlayer"
+		  class="com.corock.springcontainer.videosystem.DVDPlayer"
+		  c:_0-ref="digitalVideoDisc" /> -->
+
+	<!-- 06. 생성자를 통한 빈 주입 04: c-namespace 사용 argument가 하나인 경우 -->
+	<bean id="dvdPlayer"
+		  class="com.corock.springcontainer.videosystem.DVDPlayer"
+		  c:_-ref="digitalVideoDisc" />
+
+</beans>

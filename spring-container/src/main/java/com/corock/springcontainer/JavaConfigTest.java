@@ -7,6 +7,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.corock.springcontainer.soundsystem.CDPlayer;
 import com.corock.springcontainer.soundsystem.CompactDisc;
 import com.corock.springcontainer.user.User;
+import com.corock.springcontainer.videosystem.DVDPlayer;
+import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 
 import config.user.AppConfig01;
 
@@ -15,13 +17,14 @@ public class JavaConfigTest {
 	public static void main(String[] args) {
 //		testJavaConfig01();
 //		testJavaConfig02();
-		testJavaConfig03();
+//		testJavaConfig03();
+		testJavaConfig04();
 	}
 	
 	/**
 	 * Java Config 01
 	 * 직접 설정 자바 클래스를 전달하는 경우
-	 * 설정 자바 클래스에 @Configuration 이 필요 없음
+	 * 설정 자바 클래스에 @Configuration 필요 없음
 	 */
 	public static void testJavaConfig01() {
 		ApplicationContext appCtx = new AnnotationConfigApplicationContext( AppConfig01.class );
@@ -35,7 +38,7 @@ public class JavaConfigTest {
 	/**
 	 * Java Config 02
 	 * 직접 설정 자바 클래스가 있는 베이스 패키지를 지정하는 방법
-	 * 설정 자바 클래스에 @Configuration 이 반드시 필요하다.
+	 * 설정 자바 클래스에 @Configuration 필수
 	 */
 	public static void testJavaConfig02() {
 		ApplicationContext appCtx = new AnnotationConfigApplicationContext( "config.user" );
@@ -52,14 +55,37 @@ public class JavaConfigTest {
 	 */
 	public static void testJavaConfig03() {
 		ApplicationContext appCtx = new AnnotationConfigApplicationContext( "config.soundsystem" );
-		
+
 		CompactDisc cd = appCtx.getBean( CompactDisc.class );
 		System.out.println( cd );
-		
+
+		cd = (CompactDisc) appCtx.getBean( "Parachutes" );
+		System.out.println( cd );
+
 		CDPlayer cdPlayer = appCtx.getBean( CDPlayer.class );
 		cdPlayer.play();
+
+		( (ConfigurableApplicationContext) appCtx ).close();
+	}
+	
+	/**
+	 * Java Config 04
+	 * Don't use @ComponentScan
+	 * Use @Bean of method in java config class
+	 */
+	public static void testJavaConfig04() {
+		ApplicationContext appCtx = new AnnotationConfigApplicationContext( "config.videosystem" );
+		
+		DigitalVideoDisc dvd = appCtx.getBean( DigitalVideoDisc.class );
+		System.out.println( dvd );
+		
+		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
+		dvdPlayer.play();
+
+//		DVDPlayer dvdPlayer = (DVDPlayer) appCtx.getBean( "dvdPlayer2" );
+//		dvdPlayer.play();
 		
 		( (ConfigurableApplicationContext) appCtx ).close();
-	}	
+	}
 
 }

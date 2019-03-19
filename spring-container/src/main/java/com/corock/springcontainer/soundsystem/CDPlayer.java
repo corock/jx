@@ -1,6 +1,7 @@
 package com.corock.springcontainer.soundsystem;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +27,8 @@ public class CDPlayer {
 	}
 
 	/** Wiring 4 */
-	@Autowired
+//	@Autowired
+	@Inject
 	public void insertCompactDisc( CompactDisc cd ) {
 		this.cd = cd;
 	}
