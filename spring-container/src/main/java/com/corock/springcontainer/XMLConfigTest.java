@@ -14,7 +14,7 @@ import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 public class XMLConfigTest {
 
 	public static void main(String[] args) {
-//		testXMLConfig01();
+		testXMLConfig01();
 		testXMLConfig02();
 	}
 	
@@ -36,7 +36,7 @@ public class XMLConfigTest {
 	}
 	
 	/**
-	 * XML Config 02
+	 * XML Config 02 - 명시적 설정
 	 * Bean config
 	 */
 	public static void testXMLConfig02() {
@@ -46,7 +46,7 @@ public class XMLConfigTest {
 		DigitalVideoDisc dvd = appCtx.getBean( Avengers.class );
 		System.out.println( dvd );
 		
-		dvd = (DigitalVideoDisc) appCtx.getBean( "digitalVideoDisc" );
+		dvd = (DigitalVideoDisc) appCtx.getBean( "avengersInfinityWar" );
 		System.out.println( dvd );
 		
 		DVDPack dvdPack = appCtx.getBean( DVDPack.class );

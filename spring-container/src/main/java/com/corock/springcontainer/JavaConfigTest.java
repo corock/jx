@@ -50,7 +50,7 @@ public class JavaConfigTest {
 	}
 	
 	/**
-	 * Java Config 03
+	 * Java Config 03 - 자동 설정
 	 * Component Scanning( @Component, @Autowired )
 	 */
 	public static void testJavaConfig03() {
@@ -69,7 +69,7 @@ public class JavaConfigTest {
 	}
 	
 	/**
-	 * Java Config 04
+	 * Java Config 04 - 명시적 설정
 	 * Don't use @ComponentScan
 	 * Use @Bean of method in java config class
 	 */
@@ -86,6 +86,27 @@ public class JavaConfigTest {
 //		dvdPlayer.play();
 		
 		( (ConfigurableApplicationContext) appCtx ).close();
+	}
+	
+	/**
+	 * Java Config 05 - mixing 01
+	 * Java Config <- Java Config 2
+	 */
+	public static void testJavaConfig05() {
+	}
+
+	/**
+	 * Java Config 06 - mixing 02
+	 * Java Config <- Java Config + Java Config
+	 */
+	public static void testJavaConfig06() {
+	}
+
+	/**
+	 * Java Config 07 - mixing 03
+	 * Java Config <- Java Config + XML Config
+	 */
+	public static void testJavaConfig07() {
 	}
 
 }
