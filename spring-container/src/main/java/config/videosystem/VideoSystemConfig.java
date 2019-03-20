@@ -8,7 +8,7 @@ import com.corock.springcontainer.videosystem.DVDPlayer;
 import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 
 @Configuration
-public class DVDPlayerConfig {
+public class VideoSystemConfig {
 
 	@Bean
 	public Avengers avengers() {
