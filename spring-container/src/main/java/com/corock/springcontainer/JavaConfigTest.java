@@ -10,6 +10,8 @@ import com.corock.springcontainer.user.User;
 import com.corock.springcontainer.videosystem.DVDPlayer;
 import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 
+import config.mixing.videosystem.DVDPlayerConfig;
+import config.mixing.videosystem.VideoSystemConfig;
 import config.user.AppConfig01;
 
 public class JavaConfigTest {
@@ -18,7 +20,9 @@ public class JavaConfigTest {
 //		testJavaConfig01();
 //		testJavaConfig02();
 //		testJavaConfig03();
-		testJavaConfig04();
+//		testJavaConfig04();
+		testJavaConfig05();
+		testJavaConfig06();
 	}
 	
 	/**
@@ -32,7 +36,7 @@ public class JavaConfigTest {
 		User user = appCtx.getBean( User.class );
 		System.out.println( user );
 		
-		( (ConfigurableApplicationContext) appCtx ).close();
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 	
 	/**
@@ -46,7 +50,7 @@ public class JavaConfigTest {
 		User user = appCtx.getBean( User.class );
 		System.out.println( user );
 		
-		( (ConfigurableApplicationContext) appCtx ).close();
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 	
 	/**
@@ -65,7 +69,7 @@ public class JavaConfigTest {
 		CDPlayer cdPlayer = appCtx.getBean( CDPlayer.class );
 		cdPlayer.play();
 
-		( (ConfigurableApplicationContext) appCtx ).close();
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 	
 	/**
@@ -85,14 +89,20 @@ public class JavaConfigTest {
 //		DVDPlayer dvdPlayer = (DVDPlayer) appCtx.getBean( "dvdPlayer2" );
 //		dvdPlayer.play();
 		
-		( (ConfigurableApplicationContext) appCtx ).close();
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 	
 	/**
 	 * Java Config 05 - mixing 01
-	 * Java Config <- Java Config 2
+	 * Java Config <- Java Config
 	 */
 	public static void testJavaConfig05() {
+		ApplicationContext appCtx = new AnnotationConfigApplicationContext( DVDPlayerConfig.class );
+		
+		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
+		dvdPlayer.play();
+		
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 
 	/**
@@ -100,6 +110,12 @@ public class JavaConfigTest {
 	 * Java Config <- Java Config + Java Config
 	 */
 	public static void testJavaConfig06() {
+		ApplicationContext appCtx = new AnnotationConfigApplicationContext( VideoSystemConfig.class );
+		
+		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
+		dvdPlayer.play();
+		
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 
 	/**
