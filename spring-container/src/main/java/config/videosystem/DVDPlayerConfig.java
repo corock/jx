@@ -1,7 +1,11 @@
-package com.corock.springcontainer.videosystem;
+package config.videosystem;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.corock.springcontainer.videosystem.Avengers;
+import com.corock.springcontainer.videosystem.DVDPlayer;
+import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 
 @Configuration
 public class DVDPlayerConfig {
