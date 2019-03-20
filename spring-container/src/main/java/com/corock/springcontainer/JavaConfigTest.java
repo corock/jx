@@ -11,7 +11,9 @@ import com.corock.springcontainer.videosystem.DVDPlayer;
 import com.corock.springcontainer.videosystem.DigitalVideoDisc;
 
 import config.mixing.videosystem.DVDPlayerConfig;
-import config.mixing.videosystem.VideoSystemConfig;
+import config.mixing.videosystem.VideoSystemConfig01;
+import config.mixing.videosystem.VideoSystemConfig02;
+import config.mixing.videosystem.VideoSystemConfig03;
 import config.user.AppConfig01;
 
 public class JavaConfigTest {
@@ -21,8 +23,10 @@ public class JavaConfigTest {
 //		testJavaConfig02();
 //		testJavaConfig03();
 //		testJavaConfig04();
-		testJavaConfig05();
-		testJavaConfig06();
+//		testJavaConfig05();
+//		testJavaConfig06();
+//		testJavaConfig07();
+		testJavaConfig08();
 	}
 	
 	/**
@@ -110,7 +114,7 @@ public class JavaConfigTest {
 	 * Java Config <- Java Config + Java Config
 	 */
 	public static void testJavaConfig06() {
-		ApplicationContext appCtx = new AnnotationConfigApplicationContext( VideoSystemConfig.class );
+		ApplicationContext appCtx = new AnnotationConfigApplicationContext( VideoSystemConfig01.class );
 		
 		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
 		dvdPlayer.play();
@@ -123,6 +127,25 @@ public class JavaConfigTest {
 	 * Java Config <- Java Config + XML Config
 	 */
 	public static void testJavaConfig07() {
+		ApplicationContext appCtx = new AnnotationConfigApplicationContext( VideoSystemConfig02.class );
+		
+		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
+		dvdPlayer.play();
+		
+		((ConfigurableApplicationContext) appCtx).close();
+	}
+
+	/**
+	 * Java Config 08 - mixing 04
+	 * Java Config <- XML Config
+	 */
+	public static void testJavaConfig08() {
+		ApplicationContext appCtx = new AnnotationConfigApplicationContext( VideoSystemConfig03.class );
+		
+		DVDPlayer dvdPlayer = appCtx.getBean( DVDPlayer.class );
+		dvdPlayer.play();
+		
+		((ConfigurableApplicationContext) appCtx).close();
 	}
 
 }
