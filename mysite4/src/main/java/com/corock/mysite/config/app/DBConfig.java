@@ -3,28 +3,35 @@ package com.corock.mysite.config.app;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySource( "classpath:com/corock/config/app/properties/jdbc.properties" )
 public class DBConfig {
 
+	@Autowired
+	private Environment env;
+	
 	@Bean
 	public DataSource basicDataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
 		
-		basicDataSource.setDriverClassName( "com.mysql.jdbc.Driver" );
-		basicDataSource.setUrl( "jdbc:mysql://localhost:3306/webdb?characterEncoding=utf8&serverTimezone=UTC" );
-		basicDataSource.setUsername( "webdb" );
-		basicDataSource.setPassword( "webdb" );
+		basicDataSource.setDriverClassName( env.getProperty("jdbc.driverClassName") );
+		basicDataSource.setUrl( env.getProperty("jdbc.url") );
+		basicDataSource.setUsername( env.getProperty("jdbc.username") );
+		basicDataSource.setPassword( env.getProperty("jdbc.password") );
 		
 		// DB connection pool tuning element
-		basicDataSource.setInitialSize( 20 );
-		basicDataSource.setMaxActive( 20 );
+		basicDataSource.setInitialSize( env.getProperty("jdbc.initialSize", Integer.class) );
+		basicDataSource.setMaxActive( env.getProperty("jdbc.maxActive", Integer.class) );
 		
 		return basicDataSource;
 	}
