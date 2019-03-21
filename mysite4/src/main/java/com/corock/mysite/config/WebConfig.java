@@ -15,6 +15,6 @@ import com.corock.config.web.SecurityConfig;
  */
 @Configuration
 @ComponentScan(value = { "com.corock.mysite.controller", "com.corock.mysite.exception" })
-@Import( MVCConfig.class )
+@Import(value = { MVCConfig.class, SecurityConfig.class, MessagesConfig.class })
 public class WebConfig {
 }
