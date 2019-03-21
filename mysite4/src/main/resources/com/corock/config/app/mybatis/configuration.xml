@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="uservo" type="com.corock.mysite.vo.UserVO" />
+ 		<typeAlias alias="guestbookvo" type="com.corock.mysite.vo.GuestbookVO" />
+		<typeAlias alias="boardvo" type="com.corock.mysite.vo.BoardVO" />
+		<typeAlias alias="sitevo" type="com.corock.mysite.vo.SiteVO" />
+		<typeAlias alias="galleryvo" type="com.corock.mysite.vo.GalleryVO" />
+	</typeAliases>
+	
+	<!-- SQL문을 저장하는 파일 -->
+	<mappers>
+		<mapper resource="com/corock/config/app/mybatis/mappers/user.xml" />
+		<mapper resource="com/corock/config/app/mybatis/mappers/guestbook.xml" />
+		<mapper resource="com/corock/config/app/mybatis/mappers/board.xml" />
+		<mapper resource="com/corock/config/app/mybatis/mappers/site.xml" />
+		<mapper resource="com/corock/config/app/mybatis/mappers/gallery.xml" />
+	</mappers>
+
+</configuration>
