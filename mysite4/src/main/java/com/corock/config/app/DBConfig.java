@@ -1,4 +1,4 @@
-package com.corock.mysite.config.app;
+package com.corock.config.app;
 
 import javax.sql.DataSource;
 
