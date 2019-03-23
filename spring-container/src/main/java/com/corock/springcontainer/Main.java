@@ -6,6 +6,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
+import com.corock.springcontainer.user.Friend;
+import com.corock.springcontainer.user.User;
+import com.corock.springcontainer.user.User1;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -14,7 +18,7 @@ public class Main {
 	}
 	
 	private static void testApplicationContext() {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("config/applicationContext.xml");
+		ApplicationContext ac = new ClassPathXmlApplicationContext("config/user/applicationContext.xml");
 		
 		User1 user1 = ac.getBean( User1.class );
 		System.out.println( user1.getName() );
@@ -49,12 +53,12 @@ public class Main {
 
 	public static void testBeanFactory() {
 		// @ 설정인 경우, id가 자동으로 만들어진다. ex) User1 => user1
-		BeanFactory bf1 = new XmlBeanFactory( new ClassPathResource("config/applicationContext2.xml") );
+		BeanFactory bf1 = new XmlBeanFactory( new ClassPathResource("config/user/applicationContext2.xml") );
 		User1 user = (User1) bf1.getBean( "user1" );
 		System.out.println( user.getName() );
 
 		// XML Bean 설정인 경우, id를 주지 않으면 에러!
-		BeanFactory bf2 = new XmlBeanFactory( new ClassPathResource("config/applicationContext.xml") );
+		BeanFactory bf2 = new XmlBeanFactory( new ClassPathResource("config/user/applicationContext.xml") );
 		// user = (User1) bf2.getBean( "user2" );
 
 		// id 대신 타입으로 빈을 가져올 수 있다.

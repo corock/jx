@@ -4,9 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>hellospring</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h1>Hello Spring!</h1>
+	<h1>Ooooooops!</h1>
+	<p>
+		죄송합니다.<br>
+		요청한 페이지를 찾을 수 없습니다.<br>
+	</p>
 </body>
 </html>
