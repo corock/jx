@@ -46,12 +46,12 @@ public class BookMall {
 
 		List<OrderVO> list = new OrderDAO().getOrderBookList();
 		for (OrderVO vo : list) {
-			System.out.println(vo.getOrderNo() + ", " + vo.getBookName() + ", " + vo.getCount());
+			System.out.println(vo.getBookNo() + ", " + vo.getBookName() + ", " + vo.getCustomerNo());
 		}		
 	}
 
 	private static void insertOrderBook() {
-		/** constructor args: @orderNo, @bookNo, @count) */
+		/** constructor args: @bookNo, @bookName, @customerNo */
 		OrderVO orderVo = new OrderVO(1, 1, 2);
 		new OrderDAO().insertOrderBook(orderVo);
 
@@ -107,13 +107,13 @@ public class BookMall {
 	}
 	
 	private static void insertBook() {
-		BookVO bookVo = new BookVO("Effective Java", 36000, 3);
+		BookVO bookVo = new BookVO("Effective Java", 36000, 1);
 		new BookDAO().insert(bookVo);
 
 		bookVo = new BookVO("In Paris", 26000, 2);
 		new BookDAO().insert(bookVo);
 
-		bookVo = new BookVO("1984", 7100, 1);
+		bookVo = new BookVO("1984", 7100, 3);
 		new BookDAO().insert(bookVo);
 	}
 	

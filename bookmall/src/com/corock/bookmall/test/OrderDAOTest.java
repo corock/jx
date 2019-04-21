@@ -22,12 +22,12 @@ public class OrderDAOTest {
 
 		List<OrderVO> list = new OrderDAO().getOrderBookList();
 		for (OrderVO vo : list) {
-			System.out.println(vo.getOrderNo() + ", " + vo.getBookName() + ", " + vo.getCount());
-		}		
+			System.out.println(vo.getBookNo() + ", " + vo.getBookName() + ", " + vo.getCustomerNo());
+		}	
 	}
 
 	private static void insertOrderBookTest() {
-		/** constructor args: @orderNo, @bookNo, @count */
+		/** constructor args: @bookNo, @bookName, @customerNo */
 		OrderVO orderVo = new OrderVO(1, 1, 2);
 		new OrderDAO().insertOrderBook(orderVo);
 
