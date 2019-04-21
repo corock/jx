@@ -25,10 +25,10 @@ public class MainController {
 	}
 
 	/** @see WEB-INF/spring-servlet.xml */
-	@ResponseBody
+//	@ResponseBody
 	@RequestMapping( "/hello" )
 	public String hello() {
-		return "<h1>안녕하세요.</h1>";
+		return "/main/hello";
 	}
 
 	/** @see WEB-INF/spring-servlet.xml */
