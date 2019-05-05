@@ -21,18 +21,19 @@ public class OrderDAO {
 		
 		try {
 			conn = DB.getConnection();
-			String sql = "SELECT a.order_no, b.title, a.count" +
-						 "  FROM Order_Book a, Book b" + 
-						 " WHERE a.book_no = b.no";
+			String sql = "SELECT b.book_no, c.title, a.customer_no" +
+						 "  FROM Order_List a, Order_Book b, Book c" + 
+						 " WHERE b.order_no = a.no" +
+						 "   AND b.book_no = c.no";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				OrderVO vo = new OrderVO();
 				
-				vo.setOrderNo(rs.getLong(1));
+				vo.setBookNo(rs.getLong(1));
 				vo.setBookName(rs.getString(2));
-				vo.setCount(rs.getInt(3));
+				vo.setCustomerNo(rs.getLong(3));
 				
 				list.add(vo);
 			}
