@@ -12,4 +12,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<org.springframework-version>4.3.18.RELEASE</org.springframework-version>
 	</properties>
+	<modules>
+		<module>chapter01</module>
+	</modules>
 </project>
