@@ -1,5 +1,6 @@
-#  👨‍💻 Full-Stack Web
-This is an aggregate repository that composed of java-based full-stack web development course in 2019.
+#  Full-Stack Web
+👨‍💻 This is an aggregate repository that composed of java-based full-stack web development course in 2019.
+
 
 
 ## Curriculum
@@ -12,3 +13,15 @@ This is an aggregate repository that composed of java-based full-stack web devel
 - [x] Jenkins
 - [x] Node.js
 - [x] React
+
+
+
+## Directory Structure
+- java
+- front-end
+- spring-lecture
+- email-list
+- guestbook
+- mysite
+- jblog
+- movie-app
