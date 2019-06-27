@@ -25,3 +25,10 @@
 - mysite
 - jblog
 - movie-app
+
+
+
+## Questions?
+
+[Open an Issue](https://github.com/corock/full-stack-web/issues/new) and let's chat!
+
