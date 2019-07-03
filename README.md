@@ -1,10 +1,9 @@
 #  Full-Stack Web
-👨‍💻 This is an aggregate repository that composed of java-based full-stack web development course in 2019.
+This is an aggregate repository that composed of java-based full-stack web development course in 2019.  
+The curriculum is as listed below:  
 
 
-
-## Curriculum
-- [x] Java
+- [x] [Java](https://github.com/corock/full-stack-web/tree/master/java)
 - [x] Servlet / JSP
 - [x] HTML / CSS / JavaScript
 - [x] Spring MVC
