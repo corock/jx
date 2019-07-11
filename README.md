@@ -3,7 +3,7 @@ This is an aggregate repository that composed of java-based full-stack web devel
 The curriculum is as listed below:  
 
 
-- [x] [Java](https://github.com/corock/full-stack-web/tree/master/java)
+- [x] Java
 - [x] Servlet / JSP
 - [x] HTML / CSS / JavaScript
 - [x] Spring MVC
@@ -16,7 +16,7 @@ The curriculum is as listed below:
 
 
 ## Directory Structure
-- java
+- [java](https://github.com/corock/full-stack-web/tree/master/java)
 - front-end
 - spring-lecture
 - email-list
@@ -24,6 +24,10 @@ The curriculum is as listed below:
 - mysite
 - jblog
 - movie-app
+
+
+
+## Some Guides
 
 
 
